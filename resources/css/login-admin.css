@@ -1,0 +1,19 @@
+body .container {
+  margin-top: 100px;
+}
+
+body .logo {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.form-check-label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 16px;
+}
