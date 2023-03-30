@@ -12,10 +12,14 @@ import {
   PATH_ADMIN_IDEAS,
   PATH_RM_IDEAS,
   PATH_CLIENT_IDEAS,
+  PATH_ADMIN_PRODUCT_TYPES,
+  PATH_ADMIN_CURRENCIES,
 } from "./consts";
 import Profile from "./pages/profile";
 import SignUp from "./pages/sign-up";
 import Recommend from "./pages/recommend";
+import ProductTypes from "./pages/admin/product_types";
+import Currencies from "./pages/admin/currencies";
 
 function ProtectedPath() {
   const { isLogged, role } = useAuth();
@@ -52,6 +56,11 @@ function ProtectedPath() {
     switch (pathname) {
       case PATH_ADMIN_IDEAS:
         return <AdminIdeas />;
+      case PATH_ADMIN_PRODUCT_TYPES:
+        return <ProductTypes />;
+      case PATH_ADMIN_CURRENCIES:
+        return <Currencies />;
+
       default:
         return <Navigate to={PATH_ADMIN_IDEAS} replaced />;
     }
@@ -80,6 +89,8 @@ function AppPath(props) {
       <Route path={"/profile"} element={<Profile />} />
       <Route path={PATH_CLIENT_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEAS} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_PRODUCT_TYPES} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_CURRENCIES} element={ProtectedPath()} />
       <Route path={PATH_RM_IDEAS} element={ProtectedPath()} />
     </Routes>
   );

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductTypes;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 
-class ProductTypesController extends Controller
+class CurrencyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $productType = ProductTypes::orderBy('updated_at', 'DESC')->get();
-        return response()->json(['success' => true, 'data' => $productType], 200);
+        $currency = Currency::orderBy('updated_at', 'DESC')->get();
+        return response()->json(['success' => true, 'data' => $currency], 200);
     }
 
     /**
@@ -30,11 +30,11 @@ class ProductTypesController extends Controller
     public function store(Request $request)
     {
         $storeData = $request->validate([
-            'name' => 'required|max:255',
+            'title' => 'required|max:255',
         ]);
-        $newProductType = ProductTypes::create($storeData);
-        if ($newProductType) {
-            return response()->json(['data' => $newProductType, 'message' => 'Created successfully'], 201);
+        $newCurrency = Currency::create($storeData);
+        if ($newCurrency) {
+            return response()->json(['data' => $newCurrency, 'message' => 'Created successfully'], 201);
         }
     }
 
@@ -51,8 +51,8 @@ class ProductTypesController extends Controller
      */
     public function edit(string $id)
     {
-        $productTypes = ProductTypes::find($id);
-        return response()->json(['status' => 200, 'productType' => $productTypes]);
+        $currency = Currency::find($id);
+        return response()->json(['status' => 200, 'currency' => $currency]);
     }
 
     /**
@@ -61,9 +61,9 @@ class ProductTypesController extends Controller
     public function update(Request $request, string $id)
     {
         $updateData = $request->validate([
-            'name' => 'required|max:255',
+            'title' => 'required|max:255',
         ]);
-        ProductTypes::whereId($id)->update($updateData);
+        Currency::whereId($id)->update($updateData);
         return response()->json(['message' => 'Updated successfully'], 200);
     }
 
@@ -72,8 +72,8 @@ class ProductTypesController extends Controller
      */
     public function destroy(string $id)
     {
-        $productType = ProductTypes::find($id);
-        if ($productType->delete()) {
+        $currency = Currency::find($id);
+        if ($currency->delete()) {
             return response()->json(['message' => 'Deleted successfully'], 200);
         }
     }

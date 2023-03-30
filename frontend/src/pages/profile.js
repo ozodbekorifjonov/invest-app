@@ -262,7 +262,9 @@ function Profile() {
               </div>
             </div>
             <div className="col-3 offset-8">
-              <button className="app-form-button">Change</button>
+              <button className="app-form-button app-button-primary w-100">
+                Change
+              </button>
             </div>
           </div>
         </div>

@@ -1,9 +1,9 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
-import { ROLE_CLIENT } from "../consts";
+import { ROLE_ADMIN, ROLE_CLIENT } from "../consts";
 
 const ContextProps = {
-  isLogged: false,
-  role: ROLE_CLIENT,
+  isLogged: true,
+  role: ROLE_ADMIN,
   signIn: (email, pin, adrnr) => {},
   logOut: () => {},
   getUserData: () => {},

@@ -54,14 +54,6 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
-    padding: 0;
-    margin: 0;
-  }
-
   img {
     height: auto;
     user-select: none;
@@ -117,12 +109,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .app-form-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: -webkit-fill-available;
+    text-align: center;
     padding: 17px 15px;
-    background-color: #0336FF;
     font-size: 15px;
     line-height: 1.2;
     color: #fff;
@@ -130,6 +118,33 @@ const GlobalStyle = createGlobalStyle`
     border: none;
   }
 
+  .app-form-button-sm {
+    text-align: center;
+    padding: 8px 16px;
+    font-size: 15px;
+    line-height: 1.2;
+    color: #fff;
+    border: none;
+  }
+
+  .app-button-primary {
+    background-color: #0336FF;
+  }
+
+  .app-button-success {
+    background-color: #41c300;
+    color: #040001;
+  }
+
+  .app-button-danger {
+    background-color: #ff0266;
+    color: #040001;
+  }
+
+  .app-button-warning {
+    background-color: #ffde03;
+    color: #040001;
+  }
 `;
 
 export default GlobalStyle;

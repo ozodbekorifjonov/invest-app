@@ -81,6 +81,28 @@ function Layout({ children }) {
                       </span>
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link
+                      to={pathByUserRole("product-types")}
+                      className="nav-link align-middle px-0"
+                    >
+                      <i className="fs-4 bi-box"></i>{" "}
+                      <span className="ms-1 d-none d-sm-inline">
+                        Product Types
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      to={pathByUserRole("currencies")}
+                      className="nav-link align-middle px-0"
+                    >
+                      <i className="fs-4 bi-currency-exchange"></i>{" "}
+                      <span className="ms-1 d-none d-sm-inline">
+                        Currencies
+                      </span>
+                    </Link>
+                  </li>
                 </ul>
                 <hr />
                 <div className="pb-4">

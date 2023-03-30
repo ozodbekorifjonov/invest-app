@@ -1,38 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import useAsyncLoader from "../hooks/useAsyncLoader";
-import { productTypesListAPI } from "../api/investApi";
-
-const PRODUCT_TYPES = [
-  {
-    id: 1,
-    title: "Technology",
-  },
-  {
-    id: 2,
-    title: "Pharmacy",
-  },
-  {
-    id: 3,
-    title: "Idea",
-  },
-  {
-    id: 4,
-    title: "Skills",
-  },
-  {
-    id: 5,
-    title: "Blockchain",
-  },
-  {
-    id: 6,
-    title: "Insurance",
-  },
-  {
-    id: 7,
-    title: "Finance",
-  },
-];
+import { useRecommends } from "../store/recommend-provider";
+import Loader from "../UI/Loader";
 
 const CURRENCIES = [
   {
@@ -137,6 +106,11 @@ function Recommend() {
   const [selectedProductTypes, setProductTypes] = useState([]);
   const [selectedCurrencies, setCurrencies] = useState([]);
   const [selectedCountries, setCountries] = useState([]);
+  const { isLoading, productTypesList, getProductTypesList } = useRecommends();
+
+  useEffect(() => {
+    getProductTypesList();
+  }, [getProductTypesList]);
 
   const selectItem = (item, type) => {
     switch (type) {
@@ -184,76 +158,83 @@ function Recommend() {
     <BgDiv>
       <BoxDiv>
         <h4>Profile set up to recommend ideas</h4>
-        <RecDiv>
-          <h5>Select product types</h5>
+        {isLoading && <Loader />}
+        {!isLoading && (
+          <>
+            <RecDiv>
+              <h5>Select product types</h5>
 
-          <div className="line-box">
-            {PRODUCT_TYPES
-              ? PRODUCT_TYPES.map((item, index) => (
-                  <span
-                    onClick={() => selectItem(item, "product_type")}
-                    key={index}
-                    className={`${
-                      selectedProductTypes &&
-                      selectedProductTypes.filter((i) => i.id === item.id)
-                        .length > 0
-                        ? "selected"
-                        : ""
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-                ))
-              : null}
-          </div>
-        </RecDiv>
-        <RecDiv>
-          <h5>Select currency</h5>
+              <div className="line-box">
+                {productTypesList
+                  ? productTypesList.map((item, index) => (
+                      <span
+                        onClick={() => selectItem(item, "product_type")}
+                        key={index}
+                        className={`${
+                          selectedProductTypes &&
+                          selectedProductTypes.filter((i) => i.id === item.id)
+                            .length > 0
+                            ? "selected"
+                            : ""
+                        }`}
+                      >
+                        {item.name}
+                      </span>
+                    ))
+                  : null}
+              </div>
+            </RecDiv>
+            <RecDiv>
+              <h5>Select currency</h5>
 
-          <div className="line-box">
-            {CURRENCIES
-              ? CURRENCIES.map((item, index) => (
-                  <span
-                    onClick={() => selectItem(item, "currency")}
-                    key={index}
-                    className={`${
-                      selectedCurrencies &&
-                      selectedCurrencies.filter((i) => i.id === item.id)
-                        .length > 0
-                        ? "selected"
-                        : ""
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-                ))
-              : null}
-          </div>
-        </RecDiv>
-        <RecDiv>
-          <h5>Select country</h5>
+              <div className="line-box">
+                {CURRENCIES
+                  ? CURRENCIES.map((item, index) => (
+                      <span
+                        onClick={() => selectItem(item, "currency")}
+                        key={index}
+                        className={`${
+                          selectedCurrencies &&
+                          selectedCurrencies.filter((i) => i.id === item.id)
+                            .length > 0
+                            ? "selected"
+                            : ""
+                        }`}
+                      >
+                        {item.title}
+                      </span>
+                    ))
+                  : null}
+              </div>
+            </RecDiv>
+            <RecDiv>
+              <h5>Select country</h5>
 
-          <div className="line-box">
-            {COUNTRIES
-              ? COUNTRIES.map((item, index) => (
-                  <span
-                    onClick={() => selectItem(item, "country")}
-                    key={index}
-                    className={`${
-                      selectedCountries &&
-                      selectedCountries.filter((i) => i.id === item.id).length >
-                        0
-                        ? "selected"
-                        : ""
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-                ))
-              : null}
-          </div>
-        </RecDiv>
-        <button className="app-form-button">Submit</button>
+              <div className="line-box">
+                {COUNTRIES
+                  ? COUNTRIES.map((item, index) => (
+                      <span
+                        onClick={() => selectItem(item, "country")}
+                        key={index}
+                        className={`${
+                          selectedCountries &&
+                          selectedCountries.filter((i) => i.id === item.id)
+                            .length > 0
+                            ? "selected"
+                            : ""
+                        }`}
+                      >
+                        {item.title}
+                      </span>
+                    ))
+                  : null}
+              </div>
+            </RecDiv>
+            <button className="app-form-button app-button-primary w-100">
+              Submit
+            </button>
+          </>
+        )}
       </BoxDiv>
     </BgDiv>
   );
