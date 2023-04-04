@@ -1,6 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useRef } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../store/auth-provider';
 
 const BoxDiv = styled.div`
   position: absolute;
@@ -10,7 +11,7 @@ const BoxDiv = styled.div`
   background: #fff;
   border-radius: 10px;
   padding: 55px 85px;
-  width: 25%;
+  width: 30%;
   box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
 
   h4 {
@@ -49,18 +50,40 @@ const WarmDiv = styled.div`
 `;
 
 function SignIn() {
+  const email = useRef();
+  const password = useRef();
+
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+
+    const response = await signIn(email.current.value, password.current.value);
+    console.log(response);
+    if (response.statusText === 'OK') {
+      navigate('/');
+    }
+  };
+
   return (
     <BgDiv>
       <BoxDiv>
         <h4>Account Login</h4>
-        <form>
+        <form onSubmit={loginUser}>
           <div className="app-form-control">
-            <input name="email" type="email" placeholder="Email" />
+            <input name="email" type="email" ref={email} required={true} placeholder="Email" />
           </div>
           <div className="app-form-control">
-            <input name="pass" type="password" placeholder="Password" />
+            <input
+              name="pass"
+              type="password"
+              ref={password}
+              required={true}
+              placeholder="Password"
+            />
           </div>
-          <button className="app-form-button">Submit</button>
+          <button className="app-form-button app-button-primary w-100">Submit</button>
         </form>
         <WarmDiv>
           <div className="line-box">

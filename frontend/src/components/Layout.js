@@ -1,8 +1,8 @@
-import React from "react";
-import Logo from "../assets/images/logo.png";
-import { Link } from "react-router-dom";
-import { useAuth } from "../store/auth-provider";
-import { ROLE_ADMIN, ROLE_CLIENT, ROLE_RM } from "../consts";
+import React from 'react';
+import Logo from '../assets/images/logo.png';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../store/auth-provider';
+import { ROLE_ADMIN, ROLE_CLIENT, ROLE_RM } from '../consts';
 
 function Layout({ children }) {
   const { isLogged, role } = useAuth();
@@ -16,7 +16,7 @@ function Layout({ children }) {
       case ROLE_RM:
         return `/rm/${path}`;
       default:
-        return "/";
+        return '/';
     }
   };
 
@@ -40,71 +40,45 @@ function Layout({ children }) {
                   id="menu"
                 >
                   <li className="nav-item">
-                    <Link
-                      to={pathByUserRole("ideas")}
-                      className="nav-link align-middle px-0"
-                    >
-                      <i className="fs-4 bi-lightbulb"></i>{" "}
+                    <Link to={pathByUserRole('ideas')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-lightbulb"></i>{' '}
                       <span className="ms-1 d-none d-sm-inline">Ideas</span>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
-                      to={pathByUserRole("holdings")}
-                      className="nav-link align-middle px-0"
-                    >
-                      <i className="fs-4 bi-wallet2"></i>{" "}
-                      <span className="ms-1 d-none d-sm-inline">
-                        My holdings
-                      </span>
+                    <Link to={pathByUserRole('holdings')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-wallet2"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">My holdings</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={pathByUserRole('contact')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-telephone"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Contact RM</span>
                     </Link>
                   </li>
                   <li className="nav-item">
                     <Link
-                      to={pathByUserRole("bank-details")}
+                      to={pathByUserRole('product-types')}
                       className="nav-link align-middle px-0"
                     >
-                      <i className="fs-4 bi bi-credit-card"></i>{" "}
-                      <span className="ms-1 d-none d-sm-inline">
-                        Bank details
-                      </span>
+                      <i className="fs-4 bi-box"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Product Types</span>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
-                      to={pathByUserRole("contact")}
-                      className="nav-link align-middle px-0"
-                    >
-                      <i className="fs-4 bi-telephone"></i>{" "}
-                      <span className="ms-1 d-none d-sm-inline">
-                        Contact RM
-                      </span>
+                    <Link to={pathByUserRole('currencies')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-currency-exchange"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Currencies</span>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
-                      to={pathByUserRole("product-types")}
-                      className="nav-link align-middle px-0"
-                    >
-                      <i className="fs-4 bi-box"></i>{" "}
-                      <span className="ms-1 d-none d-sm-inline">
-                        Product Types
-                      </span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to={pathByUserRole("currencies")}
-                      className="nav-link align-middle px-0"
-                    >
-                      <i className="fs-4 bi-currency-exchange"></i>{" "}
-                      <span className="ms-1 d-none d-sm-inline">
-                        Currencies
-                      </span>
+                    <Link to={pathByUserRole('countries')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-globe-americas"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Countries</span>
                     </Link>
                   </li>
                 </ul>
-                <hr />
                 <div className="pb-4">
                   <Link
                     to="/profile"
@@ -118,9 +92,7 @@ function Layout({ children }) {
                       height="30"
                       className="rounded-circle"
                     />
-                    <span className="d-none d-sm-inline mx-1">
-                      Ozodbek Oripjonov
-                    </span>
+                    <span className="d-none d-sm-inline mx-1">Ozodbek Oripjonov</span>
                   </Link>
                 </div>
               </div>

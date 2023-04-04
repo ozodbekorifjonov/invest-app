@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\ProductTypesController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,10 @@ use App\Http\Controllers\CurrencyController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('signup', [UserController::class, 'signup']);
+
+Route::post('login', [UserController::class, 'login']);
 
 Route::get('product-types', [ProductTypesController::class, 'index']);
 
@@ -36,4 +42,4 @@ Route::delete('currency/{id}', [CurrencyController::class, 'destroy']);
 
 Route::put('currency/{id}', [CurrencyController::class, 'update']);
 
-
+Route::resource('country', CountryController::class);

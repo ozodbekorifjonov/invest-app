@@ -1,6 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useRef } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import bcrypt from 'bcryptjs';
+import { useAuth } from '../store/auth-provider';
 
 const BoxDiv = styled.div`
   position: absolute;
@@ -10,7 +13,7 @@ const BoxDiv = styled.div`
   background: #fff;
   border-radius: 10px;
   padding: 55px 85px;
-  width: 25%;
+  width: 30%;
   box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
 
   h4 {
@@ -49,31 +52,85 @@ const WarmDiv = styled.div`
 `;
 
 function SignUp() {
+  const firstname = useRef();
+  const lastname = useRef();
+  const telephone = useRef();
+  const email = useRef();
+  const password = useRef();
+  const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
+
+  const createUserAccount = async (e) => {
+    e.preventDefault();
+
+    if (!password.current.value.match(passwordRegEx))
+      return toast.warning(
+        'Password must be minimum 8 characters, at least 1 letter and 1 number.'
+      );
+
+    const hashedPassword = bcrypt.hashSync(password.current.value);
+
+    const newAccount = {
+      firstname: firstname.current.value,
+      lastname: lastname.current.value,
+      telephone: telephone.current.value,
+      email: email.current.value,
+      password: hashedPassword,
+    };
+
+    const res = await signUp(newAccount);
+    if (res.statusText === 'OK') {
+      navigate('/sign-in');
+    }
+  };
+
   return (
     <BgDiv>
       <BoxDiv>
         <h4>Sign Up</h4>
-        <form>
+        <form onSubmit={createUserAccount}>
           <div className="app-form-control">
-            <input name="firstName" type="text" placeholder="First Name" />
-          </div>
-          <div className="app-form-control">
-            <input name="lastName" type="text" placeholder="Last Name" />
-          </div>
-          <div className="app-form-control">
-            <input name="email" type="email" placeholder="Email" />
-          </div>
-          <div className="app-form-control">
-            <input name="pass" type="password" placeholder="Password" />
+            <input
+              name="firstname"
+              type="text"
+              ref={firstname}
+              required={true}
+              placeholder="First Name"
+            />
           </div>
           <div className="app-form-control">
             <input
-              name="confirm_pass"
-              type="password"
-              placeholder="Confirm password"
+              name="lastname"
+              type="text"
+              ref={lastname}
+              required={true}
+              placeholder="Last Name"
             />
           </div>
-          <button className="app-form-button">Submit</button>
+          <div className="app-form-control">
+            <input
+              name="telephone"
+              type="tel"
+              ref={telephone}
+              required={true}
+              placeholder="Telephone"
+            />
+          </div>
+          <div className="app-form-control">
+            <input name="email" type="email" ref={email} required={true} placeholder="Email" />
+          </div>
+          <div className="app-form-control">
+            <input
+              name="password"
+              type="password"
+              ref={password}
+              required={true}
+              placeholder="Password"
+            />
+          </div>
+          <button className="app-form-button app-button-primary w-100">Submit</button>
         </form>
 
         <WarmDiv>
