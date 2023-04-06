@@ -26,6 +26,8 @@ Route::post('signup', [UserController::class, 'signup']);
 
 Route::post('login', [UserController::class, 'login']);
 
+Route::put('user-recommends/{id}', [UserController::class, 'userRecommendsUpdate']);
+
 Route::get('product-types', [ProductTypesController::class, 'index']);
 
 Route::post('product-types', [ProductTypesController::class, 'store']);

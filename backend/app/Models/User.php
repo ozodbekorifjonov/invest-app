@@ -44,6 +44,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'product_types' => 'array',
+        'currencies' => 'array',
+        'countries' => 'array',
     ];
 
     public function AauthAcessToken()

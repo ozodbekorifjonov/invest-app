@@ -1,49 +1,10 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useRecommends } from "../store/recommend-provider";
-import Loader from "../UI/Loader";
-
-const CURRENCIES = [
-  {
-    id: 1,
-    title: "￡Pound sterling",
-  },
-  {
-    id: 2,
-    title: "$ USD",
-  },
-  {
-    id: 3,
-    title: "€ Euro",
-  },
-  {
-    id: 4,
-    title: "￥ Yen",
-  },
-];
-
-const COUNTRIES = [
-  {
-    id: 1,
-    title: "United Kingdom",
-  },
-  {
-    id: 2,
-    title: "USA",
-  },
-  {
-    id: 3,
-    title: "Germany",
-  },
-  {
-    id: 4,
-    title: "India",
-  },
-  {
-    id: 5,
-    title: "Uzbekistan",
-  },
-];
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useRecommends } from '../store/recommend-provider';
+import Loader from '../UI/Loader';
+import { USER_ID } from '../consts';
+import { useAuth } from '../store/auth-provider';
+import { useNavigate } from 'react-router-dom';
 
 const BoxDiv = styled.div`
   position: absolute;
@@ -84,11 +45,12 @@ const RecDiv = styled.div`
     border: 1px solid #666;
     border-radius: 10px;
     padding: 5px 10px;
-    display: inline-block;
     margin-right: 5px;
     margin-bottom: 5px;
     cursor: pointer;
     transition: all linear 0.1s;
+    display: flex;
+    align-items: center;
 
     &:hover {
       background-color: #ffde03;
@@ -102,26 +64,43 @@ const RecDiv = styled.div`
   }
 `;
 
+const ImgStyle = styled.img`
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  margin-right: 4px;
+`;
+
 function Recommend() {
   const [selectedProductTypes, setProductTypes] = useState([]);
   const [selectedCurrencies, setCurrencies] = useState([]);
   const [selectedCountries, setCountries] = useState([]);
-  const { isLoading, productTypesList, getProductTypesList } = useRecommends();
+  const navigate = useNavigate();
+
+  const {
+    isLoading,
+    productTypesList,
+    currenciesList,
+    countriesList,
+    getProductTypesList,
+    getCurrenciesList,
+    getCountriesList,
+  } = useRecommends();
+
+  const { updateUserRecommends } = useAuth();
 
   useEffect(() => {
     getProductTypesList();
-  }, [getProductTypesList]);
+    getCurrenciesList();
+    getCountriesList();
+  }, [getProductTypesList, getCurrenciesList, getCountriesList]);
 
   const selectItem = (item, type) => {
     switch (type) {
-      case "product_type":
+      case 'product_type':
         if (selectedProductTypes.length > 0) {
-          if (
-            selectedProductTypes.filter((k) => k.id === item.id).length >= 1
-          ) {
-            setProductTypes(
-              selectedProductTypes.filter((k) => k.id !== item.id)
-            );
+          if (selectedProductTypes.filter((k) => k.id === item.id).length >= 1) {
+            setProductTypes(selectedProductTypes.filter((k) => k.id !== item.id));
           } else {
             setProductTypes((oldArray) => [...oldArray, item]);
           }
@@ -129,7 +108,7 @@ function Recommend() {
           setProductTypes((oldArray) => [...oldArray, item]);
         }
         break;
-      case "currency":
+      case 'currency':
         if (selectedCurrencies.length > 0) {
           if (selectedCurrencies.filter((k) => k.id === item.id).length >= 1) {
             setCurrencies(selectedCurrencies.filter((k) => k.id !== item.id));
@@ -140,7 +119,7 @@ function Recommend() {
           setCurrencies((oldArray) => [...oldArray, item]);
         }
         break;
-      case "country":
+      case 'country':
         if (selectedCountries.length > 0) {
           if (selectedCountries.filter((k) => k.id === item.id).length >= 1) {
             setCountries(selectedCountries.filter((k) => k.id !== item.id));
@@ -154,10 +133,25 @@ function Recommend() {
     }
   };
 
+  const handleUserRecommends = async () => {
+    const userId = localStorage.getItem(USER_ID);
+    const result = await updateUserRecommends(
+      userId,
+      selectedProductTypes,
+      selectedCurrencies,
+      selectedCountries
+    );
+    if (result.data.success) {
+      navigate('/sign-in');
+    }
+  };
+
   return (
     <BgDiv>
       <BoxDiv>
-        <h4>Profile set up to recommend ideas</h4>
+        <h4>
+          Profile set up <br /> to recommend ideas
+        </h4>
         {isLoading && <Loader />}
         {!isLoading && (
           <>
@@ -168,14 +162,13 @@ function Recommend() {
                 {productTypesList
                   ? productTypesList.map((item, index) => (
                       <span
-                        onClick={() => selectItem(item, "product_type")}
+                        onClick={() => selectItem(item, 'product_type')}
                         key={index}
                         className={`${
                           selectedProductTypes &&
-                          selectedProductTypes.filter((i) => i.id === item.id)
-                            .length > 0
-                            ? "selected"
-                            : ""
+                          selectedProductTypes.filter((i) => i.id === item.id).length > 0
+                            ? 'selected'
+                            : ''
                         }`}
                       >
                         {item.name}
@@ -188,17 +181,16 @@ function Recommend() {
               <h5>Select currency</h5>
 
               <div className="line-box">
-                {CURRENCIES
-                  ? CURRENCIES.map((item, index) => (
+                {currenciesList
+                  ? currenciesList.map((item, index) => (
                       <span
-                        onClick={() => selectItem(item, "currency")}
+                        onClick={() => selectItem(item, 'currency')}
                         key={index}
                         className={`${
                           selectedCurrencies &&
-                          selectedCurrencies.filter((i) => i.id === item.id)
-                            .length > 0
-                            ? "selected"
-                            : ""
+                          selectedCurrencies.filter((i) => i.id === item.id).length > 0
+                            ? 'selected'
+                            : ''
                         }`}
                       >
                         {item.title}
@@ -211,26 +203,32 @@ function Recommend() {
               <h5>Select country</h5>
 
               <div className="line-box">
-                {COUNTRIES
-                  ? COUNTRIES.map((item, index) => (
+                {countriesList
+                  ? countriesList.map((item, index) => (
                       <span
-                        onClick={() => selectItem(item, "country")}
+                        onClick={() => selectItem(item, 'country')}
                         key={index}
                         className={`${
                           selectedCountries &&
-                          selectedCountries.filter((i) => i.id === item.id)
-                            .length > 0
-                            ? "selected"
-                            : ""
+                          selectedCountries.filter((i) => i.id === item.id).length > 0
+                            ? 'selected'
+                            : ''
                         }`}
                       >
-                        {item.title}
+                        <ImgStyle
+                          src={`${process.env.REACT_APP_API_URL}images/${item.image}`}
+                          alt={item.name}
+                        />
+                        {item.name}
                       </span>
                     ))
                   : null}
               </div>
             </RecDiv>
-            <button className="app-form-button app-button-primary w-100">
+            <button
+              onClick={handleUserRecommends}
+              className="app-form-button app-button-primary w-100"
+            >
               Submit
             </button>
           </>

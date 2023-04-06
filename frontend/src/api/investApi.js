@@ -33,6 +33,14 @@ export async function signInAPI(email, password) {
   });
 }
 
+export async function updateUserRecommendsAPI(id, product_types, currencies, countries) {
+  return axios({
+    method: 'put',
+    url: `/api/user-recommends/${id}`,
+    data: { product_types, currencies, countries },
+  });
+}
+
 export async function productTypesListAPI() {
   return axios({
     method: 'get',

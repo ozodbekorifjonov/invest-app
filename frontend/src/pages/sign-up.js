@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import bcrypt from 'bcryptjs';
 import { useAuth } from '../store/auth-provider';
 
 const BoxDiv = styled.div`
@@ -70,19 +69,18 @@ function SignUp() {
         'Password must be minimum 8 characters, at least 1 letter and 1 number.'
       );
 
-    const hashedPassword = bcrypt.hashSync(password.current.value);
-
     const newAccount = {
       firstname: firstname.current.value,
       lastname: lastname.current.value,
       telephone: telephone.current.value,
       email: email.current.value,
-      password: hashedPassword,
+      password: password.current.value,
     };
 
     const res = await signUp(newAccount);
-    if (res.statusText === 'OK') {
-      navigate('/sign-in');
+    console.log(res);
+    if (res.data.success) {
+      navigate('/recommend');
     }
   };
 

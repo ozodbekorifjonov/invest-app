@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
-import { ROLE_ADMIN } from '../consts';
-import { signInAPI, signUpAPI } from '../api/investApi';
+import { ROLE_ADMIN, USER_ID } from '../consts';
+import { signInAPI, signUpAPI, updateUserRecommendsAPI } from '../api/investApi';
 import { toast } from 'react-toastify';
 
 const ContextProps = {
@@ -8,6 +8,7 @@ const ContextProps = {
   role: ROLE_ADMIN,
   signIn: (email, password) => {},
   signUp: (newAccount) => {},
+  updateUserRecommends: (id, selectedProductTypes, selectedCurrencies, selectedCountries) => {},
   logOut: () => {},
   getUserData: () => {},
 };
@@ -45,7 +46,27 @@ function useProvideAuth() {
     const password = newAccount.password;
 
     try {
-      return await signUpAPI(firstname, lastname, telephone, email, password);
+      const response = await signUpAPI(firstname, lastname, telephone, email, password);
+      localStorage.setItem(USER_ID, response.data.user.id);
+      return response;
+    } catch (e) {
+      toast.error(e.message);
+    }
+  };
+
+  const updateUserRecommends = async (
+    id,
+    selectedProductTypes,
+    selectedCurrencies,
+    selectedCountries
+  ) => {
+    try {
+      return await updateUserRecommendsAPI(
+        id,
+        selectedProductTypes,
+        selectedCurrencies,
+        selectedCountries
+      );
     } catch (e) {
       toast.error(e.message);
     }
@@ -61,6 +82,7 @@ function useProvideAuth() {
     signIn,
     logOut,
     signUp,
+    updateUserRecommends,
     getUserData,
   };
 }
