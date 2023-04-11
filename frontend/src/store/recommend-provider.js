@@ -5,7 +5,9 @@ import {
   currencyListAPI,
   instrumentsListAPI,
   majorSectorListAPI,
+  minorSectorListAPI,
   productTypesListAPI,
+  regionListAPI,
   riskRatingListAPI,
 } from '../api/investApi';
 
@@ -17,12 +19,16 @@ const ContextProps = {
   riskRatingList: [],
   instrumentList: [],
   majorSectorList: [],
+  minorSectorList: [],
+  regionList: [],
   getProductTypesList: () => {},
   getCurrenciesList: () => {},
   getCountriesList: () => {},
   getRiskRatingList: () => {},
   getInstrumentsList: () => {},
   getMajorSectorList: () => {},
+  getMinorSectorList: () => {},
+  getRegionList: () => {},
 };
 
 const RecommendContext = createContext(ContextProps);
@@ -43,6 +49,8 @@ function useProvideRecommends() {
   const [riskRatingList, setRiskRatingList] = useState([]);
   const [instrumentList, setInstrumentList] = useState([]);
   const [majorSectorList, setMajorSectorList] = useState([]);
+  const [minorSectorList, setMinorSectorList] = useState([]);
+  const [regionList, setRegionList] = useState([]);
 
   const getProductTypesList = useCallback(async () => {
     try {
@@ -116,6 +124,30 @@ function useProvideRecommends() {
     }
   }, []);
 
+  const getMinorSectorList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res = await minorSectorListAPI();
+      setLoading(false);
+      setMinorSectorList(res.data.data);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  }, []);
+
+  const getRegionList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res = await regionListAPI();
+      setLoading(false);
+      setRegionList(res.data.data);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  }, []);
+
   return {
     isLoading,
     productTypesList,
@@ -124,11 +156,15 @@ function useProvideRecommends() {
     riskRatingList,
     instrumentList,
     majorSectorList,
+    minorSectorList,
+    regionList,
     getProductTypesList,
     getCurrenciesList,
     getCountriesList,
     getRiskRatingList,
     getInstrumentsList,
     getMajorSectorList,
+    getMinorSectorList,
+    getRegionList,
   };
 }

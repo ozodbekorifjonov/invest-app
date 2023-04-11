@@ -46,6 +46,12 @@ function Layout({ children }) {
                     </Link>
                   </li>
                   <li className="nav-item">
+                    <Link to={pathByUserRole('users')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-people"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Users</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
                     <Link to={pathByUserRole('holdings')} className="nav-link align-middle px-0">
                       <i className="fs-4 bi-wallet2"></i>{' '}
                       <span className="ms-1 d-none d-sm-inline">My holdings</span>
@@ -96,7 +102,22 @@ function Layout({ children }) {
                       className="nav-link align-middle px-0"
                     >
                       <i className="fs-4 bi-layers-fill"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Major sector</span>
+                      <span className="ms-1 d-none d-sm-inline">Major sectors</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      to={pathByUserRole('minor-sector')}
+                      className="nav-link align-middle px-0"
+                    >
+                      <i className="fs-4 bi-layers"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Minor sectors</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={pathByUserRole('region')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-globe-americas"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Regions</span>
                     </Link>
                   </li>
                 </ul>

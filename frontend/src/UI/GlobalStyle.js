@@ -88,7 +88,7 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 10px;
   }
 
-  .app-form-control input {
+  .app-form-control input, select {
     padding: 15px 25px;
     display: block;
     background: 0 0;

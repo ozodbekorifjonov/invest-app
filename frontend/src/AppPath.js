@@ -18,6 +18,9 @@ import {
   PATH_ADMIN_RISK_RATING,
   PATH_ADMIN_INSTRUMENTS,
   PATH_ADMIN_MAJOR_SECTOR,
+  PATH_ADMIN_MINOR_SECTOR,
+  PATH_ADMIN_REGION,
+  PATH_ADMIN_USERS,
 } from './consts';
 import Profile from './pages/profile';
 import SignUp from './pages/sign-up';
@@ -28,6 +31,9 @@ import Countries from './pages/admin/countries';
 import RiskRating from './pages/admin/risk_rating';
 import Instruments from './pages/admin/instruments';
 import MajorSector from './pages/admin/major_sector';
+import MinorSector from './pages/admin/minor_sector';
+import Region from './pages/admin/region';
+import User from './pages/admin/users';
 
 function ProtectedPath() {
   const { isLogged, role } = useAuth();
@@ -76,6 +82,12 @@ function ProtectedPath() {
         return <Instruments />;
       case PATH_ADMIN_MAJOR_SECTOR:
         return <MajorSector />;
+      case PATH_ADMIN_MINOR_SECTOR:
+        return <MinorSector />;
+      case PATH_ADMIN_REGION:
+        return <Region />;
+      case PATH_ADMIN_USERS:
+        return <User />;
 
       default:
         return <Navigate to={PATH_ADMIN_IDEAS} replaced />;
@@ -111,6 +123,9 @@ function AppPath() {
       <Route path={PATH_ADMIN_RISK_RATING} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_INSTRUMENTS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_MAJOR_SECTOR} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_MINOR_SECTOR} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_REGION} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_USERS} element={ProtectedPath()} />
       <Route path={PATH_RM_IDEAS} element={ProtectedPath} />
     </Routes>
   );

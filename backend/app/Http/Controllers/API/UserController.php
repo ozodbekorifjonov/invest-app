@@ -15,7 +15,8 @@ class UserController extends BaseController
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return $this->sendResponse($users, 'Users fetched.');
     }
 
     /**
@@ -84,5 +85,18 @@ class UserController extends BaseController
         ]);
         User::whereId($id)->update($updateData);
         return response()->json(['message' => "Updated successfully", 'success' => true]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function updateUserRole(Request $request, string $id)
+    {
+        $updateData = $request->validate([
+            'role' => 'required',
+        ]);
+        $user = User::whereId($id)->update($updateData);
+
+        return $this->sendResponse($user, 'User role updated.');
     }
 }

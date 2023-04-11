@@ -56,6 +56,33 @@ export async function updateUserDataAPI(id, firstname, lastname, telephone, emai
   });
 }
 
+export async function usersListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'get',
+    url: `/api/users-list`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateUserRoleAPI(id, role) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/update-user-role/${id}`,
+    data: { role },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
 export async function getUserInfoAPI() {
   const token = localStorage.getItem(TOKEN);
 
@@ -404,6 +431,120 @@ export async function updateMajorSectorAPI(id, name) {
   return axios({
     method: 'put',
     url: `/api/major-sector/${id}`,
+    data: { name },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function minorSectorListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'get',
+    url: '/api/minor-sector/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function createMinorSectorAPI(name) {
+  const token = localStorage.getItem(TOKEN);
+  const form = new FormData();
+
+  form.set('name', name);
+
+  return axios({
+    method: 'post',
+    url: '/api/minor-sector/',
+    data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function deleteMinorSectorAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'delete',
+    url: `/api/minor-sector/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateMinorSectorAPI(id, name) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/minor-sector/${id}`,
+    data: { name },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function regionListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'get',
+    url: '/api/region/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function createRegionAPI(name) {
+  const token = localStorage.getItem(TOKEN);
+  const form = new FormData();
+
+  form.set('name', name);
+
+  return axios({
+    method: 'post',
+    url: '/api/region/',
+    data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function deleteRegionAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'delete',
+    url: `/api/region/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateRegionAPI(id, name) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/region/${id}`,
     data: { name },
     headers: {
       Authorization: `Bearer ${token}`,

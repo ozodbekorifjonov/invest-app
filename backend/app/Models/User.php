@@ -46,4 +46,9 @@ class User extends Authenticatable
         'currencies' => 'array',
         'countries' => 'array',
     ];
+
+    public function ideas()
+    {
+        return $this->hasMany(Idea::class);
+    }
 }
