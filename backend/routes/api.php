@@ -26,6 +26,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
+Route::get('product-types', [ProductTypeController::class, 'index']);
+Route::get('country', [CountryController::class, 'index']);
+Route::get('currency', [CurrencyController::class, 'index']);
 Route::put('user-recommends/{id}', [UserController::class, 'userRecommendsUpdate']);
 
 Route::middleware('auth:sanctum')->group(function () {

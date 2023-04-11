@@ -14,10 +14,14 @@ return new class extends Migration {
             $table->increments('id');
             $table->string('title');
             $table->longText('abstract');
-            $table->date('publish_date');
-            $table->date('expiry_date');
+            $table->dateTime('publish_date');
+            $table->dateTime('expiry_date');
             $table->unsignedInteger('user_id');
             $table->longText('content');
+            $table->string('instruments')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('region')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
