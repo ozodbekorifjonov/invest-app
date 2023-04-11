@@ -78,7 +78,6 @@ function SignUp() {
     };
 
     const res = await signUp(newAccount);
-    console.log(res);
     if (res.data.success) {
       navigate('/recommend');
     }

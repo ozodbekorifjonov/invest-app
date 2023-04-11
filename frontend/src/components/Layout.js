@@ -78,6 +78,27 @@ function Layout({ children }) {
                       <span className="ms-1 d-none d-sm-inline">Countries</span>
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link to={pathByUserRole('risk-rating')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-asterisk"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Risk ratings</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={pathByUserRole('instruments')} className="nav-link align-middle px-0">
+                      <i className="fs-4 bi-sliders"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Instruments</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      to={pathByUserRole('major-sector')}
+                      className="nav-link align-middle px-0"
+                    >
+                      <i className="fs-4 bi-layers-fill"></i>{' '}
+                      <span className="ms-1 d-none d-sm-inline">Major sector</span>
+                    </Link>
+                  </li>
                 </ul>
                 <div className="pb-4">
                   <Link

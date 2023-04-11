@@ -61,7 +61,7 @@ function SignIn() {
 
     const response = await signIn(email.current.value, password.current.value);
     console.log(response);
-    if (response.statusText === 'OK') {
+    if (response.success) {
       navigate('/');
     }
   };

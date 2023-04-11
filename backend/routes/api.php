@@ -1,11 +1,15 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BlogController;
+use App\Http\Controllers\API\InstrumentController;
+use App\Http\Controllers\API\MajorSectorController;
+use App\Http\Controllers\API\ProductTypeController;
+use App\Http\Controllers\API\RiskRatingController;
+use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\CountryController;
+use App\Http\Controllers\API\CurrencyController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\ProductTypesController;
-use App\Http\Controllers\CurrencyController;
-use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,30 +22,18 @@ use App\Http\Controllers\CountryController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('signup', [UserController::class, 'signup']);
-
-Route::post('login', [UserController::class, 'login']);
-
+Route::post('login', [AuthController::class, 'signin']);
+Route::post('register', [AuthController::class, 'signup']);
 Route::put('user-recommends/{id}', [UserController::class, 'userRecommendsUpdate']);
 
-Route::get('product-types', [ProductTypesController::class, 'index']);
-
-Route::post('product-types', [ProductTypesController::class, 'store']);
-
-Route::delete('product-types/{id}', [ProductTypesController::class, 'destroy']);
-
-Route::put('product-types/{id}', [ProductTypesController::class, 'update']);
-
-Route::get('currency', [CurrencyController::class, 'index']);
-
-Route::post('currency', [CurrencyController::class, 'store']);
-
-Route::delete('currency/{id}', [CurrencyController::class, 'destroy']);
-
-Route::put('currency/{id}', [CurrencyController::class, 'update']);
-
-Route::resource('country', CountryController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('blogs', BlogController::class);
+    Route::resource('product-types', ProductTypeController::class);
+    Route::resource('country', CountryController::class);
+    Route::resource('currency', CurrencyController::class);
+    Route::resource('risk-rating', RiskRatingController::class);
+    Route::resource('instrument', InstrumentController::class);
+    Route::resource('major-sector', MajorSectorController::class);
+    Route::post('me', [UserController::class, 'show']);
+    Route::put('update-user/{id}', [UserController::class, 'update']);
+});

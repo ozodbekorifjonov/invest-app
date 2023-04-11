@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { TOKEN } from '../consts';
 
 export async function signUpAPI(firstname, lastname, telephone, email, password) {
   const form = new FormData();
@@ -11,7 +12,7 @@ export async function signUpAPI(firstname, lastname, telephone, email, password)
 
   return axios({
     method: 'post',
-    url: '/api/signup/',
+    url: '/api/register/',
     data: form,
     contentType: 'application/json',
     accept: '*/*',
@@ -41,15 +42,49 @@ export async function updateUserRecommendsAPI(id, product_types, currencies, cou
   });
 }
 
+export async function updateUserDataAPI(id, firstname, lastname, telephone, email) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/update-user/${id}`,
+    data: { firstname, lastname, telephone, email },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function getUserInfoAPI() {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: '/api/me/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
 export async function productTypesListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'get',
     url: '/api/product-types/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function createProductTypeAPI(name) {
   const form = new FormData();
+  const token = localStorage.getItem(TOKEN);
 
   form.set('name', name);
 
@@ -57,32 +92,55 @@ export async function createProductTypeAPI(name) {
     method: 'post',
     url: '/api/product-types/',
     data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function deleteProductTypeAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'delete',
     url: `/api/product-types/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function updateProductTypeAPI(id, name) {
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'put',
     url: `/api/product-types/${id}`,
     data: { name },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function currencyListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'get',
     url: '/api/currency/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function createCurrencyAPI(name) {
+  const token = localStorage.getItem(TOKEN);
   const form = new FormData();
 
   form.set('title', name);
@@ -91,32 +149,55 @@ export async function createCurrencyAPI(name) {
     method: 'post',
     url: '/api/currency/',
     data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function deleteCurrencyAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'delete',
     url: `/api/currency/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function updateCurrencyAPI(id, title) {
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'put',
     url: `/api/currency/${id}`,
     data: { title },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function countryListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'get',
     url: '/api/country/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function createCountryAPI(name, image) {
+  const token = localStorage.getItem(TOKEN);
   const form = new FormData();
 
   form.set('name', name);
@@ -126,22 +207,207 @@ export async function createCountryAPI(name, image) {
     method: 'post',
     url: '/api/country/',
     data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function deleteCountryAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'delete',
     url: `/api/country/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }
 
 export async function updateCountryAPI(id, name, image) {
-  console.log('name, image');
-  console.log(name, image);
+  const token = localStorage.getItem(TOKEN);
+
   return axios({
     method: 'put',
     url: `/api/country/${id}`,
     data: { name, image },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function riskRatingListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'get',
+    url: '/api/risk-rating/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function createRiskRatingAPI(name) {
+  const token = localStorage.getItem(TOKEN);
+  const form = new FormData();
+
+  form.set('name', name);
+
+  return axios({
+    method: 'post',
+    url: '/api/risk-rating/',
+    data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function deleteRiskRatingAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'delete',
+    url: `/api/risk-rating/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateRiskRatingAPI(id, name) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/risk-rating/${id}`,
+    data: { name },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function instrumentsListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'get',
+    url: '/api/instrument/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function createInstrumentAPI(name) {
+  const token = localStorage.getItem(TOKEN);
+  const form = new FormData();
+
+  form.set('name', name);
+
+  return axios({
+    method: 'post',
+    url: '/api/instrument/',
+    data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function deleteInstrumentAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'delete',
+    url: `/api/instrument/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateInstrumentAPI(id, name) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/instrument/${id}`,
+    data: { name },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function majorSectorListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'get',
+    url: '/api/major-sector/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function createMajorSectorAPI(name) {
+  const token = localStorage.getItem(TOKEN);
+  const form = new FormData();
+
+  form.set('name', name);
+
+  return axios({
+    method: 'post',
+    url: '/api/major-sector/',
+    data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function deleteMajorSectorAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'delete',
+    url: `/api/major-sector/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateMajorSectorAPI(id, name) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/major-sector/${id}`,
+    data: { name },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
   });
 }

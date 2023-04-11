@@ -1,109 +1,6 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-
-const PRODUCT_TYPES = [
-  {
-    id: 1,
-    title: "Technology",
-  },
-  {
-    id: 2,
-    title: "Pharmacy",
-  },
-  {
-    id: 3,
-    title: "Idea",
-  },
-  {
-    id: 4,
-    title: "Skills",
-  },
-  {
-    id: 5,
-    title: "Blockchain",
-  },
-  {
-    id: 6,
-    title: "Insurance",
-  },
-  {
-    id: 7,
-    title: "Finance",
-  },
-];
-
-const CURRENCIES = [
-  {
-    id: 1,
-    title: "￡Pound sterling",
-  },
-  {
-    id: 2,
-    title: "$ USD",
-  },
-  {
-    id: 3,
-    title: "€ Euro",
-  },
-  {
-    id: 4,
-    title: "￥ Yen",
-  },
-];
-
-const COUNTRIES = [
-  {
-    id: 1,
-    title: "United Kingdom",
-  },
-  {
-    id: 2,
-    title: "USA",
-  },
-  {
-    id: 3,
-    title: "Germany",
-  },
-  {
-    id: 4,
-    title: "India",
-  },
-  {
-    id: 5,
-    title: "Uzbekistan",
-  },
-];
-
-const RecDiv = styled.div`
-  padding-bottom: 30px;
-  color: #555;
-
-  .line-box {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  span {
-    border: 1px solid #666;
-    border-radius: 10px;
-    padding: 5px 10px;
-    display: inline-block;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    cursor: pointer;
-    transition: all linear 0.1s;
-
-    &:hover {
-      background-color: #ffde03;
-      border: 1px solid #ffde03;
-    }
-  }
-
-  .selected {
-    background-color: #ffde03;
-    border: 1px solid #ffde03;
-  }
-`;
+import React, { useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { useAuth } from '../store/auth-provider';
 
 const TitleStyle = styled.div`
   h5 {
@@ -112,159 +9,78 @@ const TitleStyle = styled.div`
 `;
 
 function Profile() {
-  const [selectedProductTypes, setProductTypes] = useState([]);
-  const [selectedCurrencies, setCurrencies] = useState([]);
-  const [selectedCountries, setCountries] = useState([]);
+  const firstname_ref = useRef();
+  const lastname_ref = useRef();
+  const telephone_ref = useRef();
+  const email_ref = useRef();
+  const { userData, getUserData, updateUserData } = useAuth();
 
-  const selectItem = (item, type) => {
-    switch (type) {
-      case "product_type":
-        if (selectedProductTypes.length > 0) {
-          if (
-            selectedProductTypes.filter((k) => k.id === item.id).length >= 1
-          ) {
-            setProductTypes(
-              selectedProductTypes.filter((k) => k.id !== item.id)
-            );
-          } else {
-            setProductTypes((oldArray) => [...oldArray, item]);
-          }
-        } else {
-          setProductTypes((oldArray) => [...oldArray, item]);
-        }
-        break;
-      case "currency":
-        if (selectedCurrencies.length > 0) {
-          if (selectedCurrencies.filter((k) => k.id === item.id).length >= 1) {
-            setCurrencies(selectedCurrencies.filter((k) => k.id !== item.id));
-          } else {
-            setCurrencies((oldArray) => [...oldArray, item]);
-          }
-        } else {
-          setCurrencies((oldArray) => [...oldArray, item]);
-        }
-        break;
-      case "country":
-        if (selectedCountries.length > 0) {
-          if (selectedCountries.filter((k) => k.id === item.id).length >= 1) {
-            setCountries(selectedCountries.filter((k) => k.id !== item.id));
-          } else {
-            setCountries((oldArray) => [...oldArray, item]);
-          }
-        } else {
-          setCountries((oldArray) => [...oldArray, item]);
-        }
-        break;
-    }
+  useEffect(() => {
+    getUserData();
+  }, [getUserData]);
+
+  const handleChangeUserData = async (e) => {
+    e.preventDefault();
+    const firstname = firstname_ref.current.value || userData.firstname;
+    const lastname = lastname_ref.current.value || userData.lastname;
+    const telephone = telephone_ref.current.value || userData.telephone;
+    const email = email_ref.current.value || userData.email;
+
+    await updateUserData(userData.id, firstname, lastname, telephone, email);
   };
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-8 offset-2">
-          <h4>Profile settings</h4>
           <div className="row">
-            <div className="col-6">
-              <RecDiv>
-                <h5>Product types</h5>
-
-                <div className="line-box">
-                  {PRODUCT_TYPES
-                    ? PRODUCT_TYPES.map((item, index) => (
-                        <span
-                          onClick={() => selectItem(item, "product_type")}
-                          key={index}
-                          className={`${
-                            selectedProductTypes &&
-                            selectedProductTypes.filter((i) => i.id === item.id)
-                              .length > 0
-                              ? "selected"
-                              : ""
-                          }`}
-                        >
-                          {item.title}
-                        </span>
-                      ))
-                    : null}
-                </div>
-              </RecDiv>
-              <RecDiv>
-                <h5>Currency</h5>
-
-                <div className="line-box">
-                  {CURRENCIES
-                    ? CURRENCIES.map((item, index) => (
-                        <span
-                          onClick={() => selectItem(item, "currency")}
-                          key={index}
-                          className={`${
-                            selectedCurrencies &&
-                            selectedCurrencies.filter((i) => i.id === item.id)
-                              .length > 0
-                              ? "selected"
-                              : ""
-                          }`}
-                        >
-                          {item.title}
-                        </span>
-                      ))
-                    : null}
-                </div>
-              </RecDiv>
-              <RecDiv>
-                <h5>Country</h5>
-
-                <div className="line-box">
-                  {COUNTRIES
-                    ? COUNTRIES.map((item, index) => (
-                        <span
-                          onClick={() => selectItem(item, "country")}
-                          key={index}
-                          className={`${
-                            selectedCountries &&
-                            selectedCountries.filter((i) => i.id === item.id)
-                              .length > 0
-                              ? "selected"
-                              : ""
-                          }`}
-                        >
-                          {item.title}
-                        </span>
-                      ))
-                    : null}
-                </div>
-              </RecDiv>
-            </div>
-            <div className="col-5">
+            <div className="col-4 offset-4">
+              <h4>Profile settings</h4>
               <TitleStyle>
                 <h5>Credentials</h5>
               </TitleStyle>
               <div>
-                <form>
+                <form onSubmit={handleChangeUserData}>
                   <div className="app-form-control">
                     <input
-                      name="firstName"
+                      name="firstname"
                       type="text"
+                      defaultValue={userData?.firstname}
                       placeholder="First Name"
+                      ref={firstname_ref}
                     />
                   </div>
                   <div className="app-form-control">
                     <input
-                      name="lastName"
+                      name="lastname"
                       type="text"
+                      defaultValue={userData?.lastname}
                       placeholder="Last Name"
+                      ref={lastname_ref}
+                    />
+                  </div>
+
+                  <div className="app-form-control">
+                    <input
+                      name="telephone"
+                      type="text"
+                      defaultValue={userData?.telephone}
+                      placeholder="Telephone"
+                      ref={telephone_ref}
                     />
                   </div>
                   <div className="app-form-control">
-                    <input name="email" type="email" placeholder="Email" />
+                    <input
+                      name="email"
+                      type="email"
+                      defaultValue={userData?.email}
+                      placeholder="Email"
+                      ref={email_ref}
+                    />
                   </div>
+                  <button className="app-form-button app-button-primary w-100">Change</button>
                 </form>
               </div>
-            </div>
-            <div className="col-3 offset-8">
-              <button className="app-form-button app-button-primary w-100">
-                Change
-              </button>
             </div>
           </div>
         </div>

@@ -15,6 +15,9 @@ import {
   PATH_ADMIN_PRODUCT_TYPES,
   PATH_ADMIN_CURRENCIES,
   PATH_ADMIN_COUNTRIES,
+  PATH_ADMIN_RISK_RATING,
+  PATH_ADMIN_INSTRUMENTS,
+  PATH_ADMIN_MAJOR_SECTOR,
 } from './consts';
 import Profile from './pages/profile';
 import SignUp from './pages/sign-up';
@@ -22,13 +25,16 @@ import Recommend from './pages/recommend';
 import ProductTypes from './pages/admin/product_types';
 import Currencies from './pages/admin/currencies';
 import Countries from './pages/admin/countries';
+import RiskRating from './pages/admin/risk_rating';
+import Instruments from './pages/admin/instruments';
+import MajorSector from './pages/admin/major_sector';
 
 function ProtectedPath() {
   const { isLogged, role } = useAuth();
   const { pathname } = useLocation();
 
   if (!isLogged) {
-    return <Navigate to='/sign-in' replaced />;
+    return <Navigate to="/sign-in" replaced />;
   }
 
   if (pathname === '/') {
@@ -64,6 +70,13 @@ function ProtectedPath() {
         return <Currencies />;
       case PATH_ADMIN_COUNTRIES:
         return <Countries />;
+      case PATH_ADMIN_RISK_RATING:
+        return <RiskRating />;
+      case PATH_ADMIN_INSTRUMENTS:
+        return <Instruments />;
+      case PATH_ADMIN_MAJOR_SECTOR:
+        return <MajorSector />;
+
       default:
         return <Navigate to={PATH_ADMIN_IDEAS} replaced />;
     }
@@ -82,20 +95,25 @@ function ProtectedPath() {
   return <Outlet />;
 }
 
-function AppPath(props) {
-  return (<Routes>
-    <Route path={'/'} element={ProtectedPath()} />
-    <Route path={'/sign-in'} element={<SignIn />} />
-    <Route path={'/sign-up'} element={<SignUp />} />
-    <Route path={'/recommend'} element={<Recommend />} />
-    <Route path={'/profile'} element={<Profile />} />
-    <Route path={PATH_CLIENT_IDEAS} element={ProtectedPath()} />
-    <Route path={PATH_ADMIN_IDEAS} element={ProtectedPath()} />
-    <Route path={PATH_ADMIN_PRODUCT_TYPES} element={ProtectedPath()} />
-    <Route path={PATH_ADMIN_CURRENCIES} element={ProtectedPath()} />
-    <Route path={PATH_ADMIN_COUNTRIES} element={ProtectedPath()} />
-    <Route path={PATH_RM_IDEAS} element={ProtectedPath()} />
-  </Routes>);
+function AppPath() {
+  return (
+    <Routes>
+      <Route path={'/'} element={ProtectedPath()} />
+      <Route path={'/sign-in'} element={<SignIn />} />
+      <Route path={'/sign-up'} element={<SignUp />} />
+      <Route path={'/recommend'} element={<Recommend />} />
+      <Route path={'/profile'} element={<Profile />} />
+      <Route path={PATH_CLIENT_IDEAS} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_IDEAS} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_PRODUCT_TYPES} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_CURRENCIES} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_COUNTRIES} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_RISK_RATING} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_INSTRUMENTS} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_MAJOR_SECTOR} element={ProtectedPath()} />
+      <Route path={PATH_RM_IDEAS} element={ProtectedPath} />
+    </Routes>
+  );
 }
 
 export default AppPath;

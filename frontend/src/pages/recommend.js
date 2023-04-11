@@ -98,6 +98,10 @@ function Recommend() {
   const selectItem = (item, type) => {
     switch (type) {
       case 'product_type':
+        item = {
+          id: item.id,
+          name: item.name,
+        };
         if (selectedProductTypes.length > 0) {
           if (selectedProductTypes.filter((k) => k.id === item.id).length >= 1) {
             setProductTypes(selectedProductTypes.filter((k) => k.id !== item.id));
@@ -109,6 +113,10 @@ function Recommend() {
         }
         break;
       case 'currency':
+        item = {
+          id: item.id,
+          title: item.title,
+        };
         if (selectedCurrencies.length > 0) {
           if (selectedCurrencies.filter((k) => k.id === item.id).length >= 1) {
             setCurrencies(selectedCurrencies.filter((k) => k.id !== item.id));
@@ -120,6 +128,10 @@ function Recommend() {
         }
         break;
       case 'country':
+        item = {
+          id: item.id,
+          name: item.name,
+        };
         if (selectedCountries.length > 0) {
           if (selectedCountries.filter((k) => k.id === item.id).length >= 1) {
             setCountries(selectedCountries.filter((k) => k.id !== item.id));

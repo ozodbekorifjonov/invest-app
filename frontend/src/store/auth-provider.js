@@ -1,16 +1,24 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
-import { ROLE_ADMIN, USER_ID } from '../consts';
-import { signInAPI, signUpAPI, updateUserRecommendsAPI } from '../api/investApi';
+import { ROLE_ADMIN, TOKEN, USER_ID } from '../consts';
+import {
+  getUserInfoAPI,
+  signInAPI,
+  signUpAPI,
+  updateUserDataAPI,
+  updateUserRecommendsAPI,
+} from '../api/investApi';
 import { toast } from 'react-toastify';
 
 const ContextProps = {
   isLogged: false,
   role: ROLE_ADMIN,
+  userData: null,
   signIn: (email, password) => {},
   signUp: (newAccount) => {},
   updateUserRecommends: (id, selectedProductTypes, selectedCurrencies, selectedCountries) => {},
   logOut: () => {},
   getUserData: () => {},
+  updateUserData: (id, firstname, lastname, telephone, email) => {},
 };
 
 const AuthContext = createContext(ContextProps);
@@ -23,16 +31,42 @@ export function ProvideAuth({ children }) {
 
 export const useAuth = () => useContext(AuthContext);
 
+const loginCheckRequest = () => {
+  const token = localStorage.getItem(TOKEN);
+
+  return token !== null;
+
+  // if (!token) {
+  //   return false;
+  // }
+  // const tokenSplit = token.split('.')[1];
+  // if (!tokenSplit) {
+  //   return false;
+  // }
+  //
+  // const expiry = JSON.parse(atob(tokenSplit)).exp;
+  //
+  // const isExpired = Math.floor(new Date().getTime() / 1000) >= expiry;
+  // if (isExpired) {
+  //   localStorage.clear();
+  //   return false;
+  // }
+  //
+  // return true;
+};
+
 function useProvideAuth() {
-  const [isLogged, setLogged] = useState(ContextProps.isLogged);
+  const [isLogged, setLogged] = useState(loginCheckRequest);
   const [role, setRole] = useState(ContextProps.role);
+  const [userData, setUserData] = useState(ContextProps.userData);
   const signIn = async (email, password) => {
     try {
-      const res = await signInAPI(email, password);
-      console.log(res);
+      const response = await signInAPI(email, password);
       setLogged(true);
-      setRole(res.data.user.role);
-      return res;
+      setRole(response.data.data.user.role);
+      localStorage.setItem(USER_ID, response.data.data.user.id);
+      localStorage.setItem(TOKEN, response.data.data.token);
+      return response.data;
     } catch (e) {
       toast.error(e.message);
     }
@@ -47,7 +81,7 @@ function useProvideAuth() {
 
     try {
       const response = await signUpAPI(firstname, lastname, telephone, email, password);
-      localStorage.setItem(USER_ID, response.data.user.id);
+      localStorage.setItem(USER_ID, response.data.data.user.id);
       return response;
     } catch (e) {
       toast.error(e.message);
@@ -71,18 +105,37 @@ function useProvideAuth() {
       toast.error(e.message);
     }
   };
+  const updateUserData = async (id, firstname, lastname, telephone, email) => {
+    try {
+      const response = await updateUserDataAPI(id, firstname, lastname, telephone, email);
+      if (response.data.success) {
+        toast.success(response.data.message);
+      }
+    } catch (e) {
+      toast.error(e.response.data.message);
+    }
+  };
 
-  const getUserData = useCallback(async () => {}, []);
+  const getUserData = useCallback(async () => {
+    try {
+      const response = await getUserInfoAPI();
+      setUserData(response.data.data);
+    } catch (e) {
+      toast.error(e.response.data.message);
+    }
+  }, []);
 
   const logOut = async () => {};
 
   return {
     isLogged,
     role,
+    userData,
     signIn,
     logOut,
     signUp,
     updateUserRecommends,
+    updateUserData,
     getUserData,
   };
 }
