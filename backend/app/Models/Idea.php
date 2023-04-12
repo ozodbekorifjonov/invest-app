@@ -62,4 +62,19 @@ class Idea extends Model
     {
         return $this->belongsToMany(Country::class, 'idea_countries');
     }
+
+    public function holders()
+    {
+        return $this->belongsToMany(User::class, 'idea_holders');
+    }
+
+    public function possible_clients()
+    {
+        return $this->belongsToMany(User::class, 'idea_possible_clients');
+    }
+
+    public function rms()
+    {
+        return $this->belongsToMany(User::class, 'idea_rms');
+    }
 }

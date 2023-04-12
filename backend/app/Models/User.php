@@ -51,4 +51,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Idea::class);
     }
+
+    public function holdings()
+    {
+        return $this->belongsToMany(Idea::class, 'idea_holders');
+    }
+
+    public function possible_ideas()
+    {
+        return $this->belongsToMany(Idea::class, 'idea_possible_clients');
+    }
+
+    public function rm_recommended_ideas()
+    {
+        return $this->belongsToMany(Idea::class, 'idea_rms');
+    }
 }
