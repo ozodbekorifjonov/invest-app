@@ -1,18 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { PATH_ADMIN_IDEA_CREATE, PATH_ADMIN_IDEA_DETAILS } from '../../../consts';
+import { useIdeas } from '../../../store/idea-provider';
 
 const CardStyle = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px, rgb(51, 51, 51) 0 0 0 3px;
   padding: 30px 15px;
   margin-bottom: 15px;
 `;
 
-function AdminIdeas(props) {
+function AdminIdeas() {
+  const { ideasList, getIdeasList } = useIdeas();
+
+  useEffect(() => {
+    getIdeasList();
+  }, [getIdeasList]);
+
+  console.log(ideasList);
+
   return (
     <div className="row">
       <div className="col-10 offset-1">
         <h5>Ideas list</h5>
-        <button className="app-form-button-sm app-button-success mb-2">Add new idea</button>
+        <Link
+          to={PATH_ADMIN_IDEA_CREATE}
+          className="app-form-button-sm app-button-success mb-2 text-decoration-none d-inline-block text-black"
+        >
+          Add new idea
+        </Link>
         <CardStyle>
           <h4>
             Blockchain remains on the path of totally changing the face of financial transactions
@@ -71,7 +87,12 @@ function AdminIdeas(props) {
           </div>
           <div className="row">
             <div className="col-3 offset-9">
-              <button className="app-form-button app-button-primary w-100">Read more</button>
+              <Link
+                to={PATH_ADMIN_IDEA_DETAILS}
+                className="app-form-button app-button-primary w-100 text-decoration-none d-block text-white"
+              >
+                Read more
+              </Link>
             </div>
           </div>
         </CardStyle>
@@ -133,7 +154,12 @@ function AdminIdeas(props) {
           </div>
           <div className="row">
             <div className="col-3 offset-9">
-              <button className="app-form-button app-button-primary w-100">Read more</button>
+              <Link
+                to={PATH_ADMIN_IDEA_DETAILS}
+                className="app-form-button app-button-primary w-100 text-decoration-none d-block text-white"
+              >
+                Read more
+              </Link>
             </div>
           </div>
         </CardStyle>
@@ -195,7 +221,12 @@ function AdminIdeas(props) {
           </div>
           <div className="row">
             <div className="col-3 offset-9">
-              <button className="app-form-button app-button-primary w-100">Read more</button>
+              <Link
+                to={PATH_ADMIN_IDEA_DETAILS}
+                className="app-form-button app-button-primary w-100 text-decoration-none d-block text-white"
+              >
+                Read more
+              </Link>
             </div>
           </div>
         </CardStyle>

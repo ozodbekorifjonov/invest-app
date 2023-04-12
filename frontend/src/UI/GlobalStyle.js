@@ -88,7 +88,7 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 10px;
   }
 
-  .app-form-control input, select {
+  .app-form-control input, select, textarea {
     padding: 15px 25px;
     display: block;
     background: 0 0;
@@ -98,6 +98,10 @@ const GlobalStyle = createGlobalStyle`
     width: inherit;
     border: 1px solid #e6e6e6;
     outline: none;
+  }
+
+  .app-form-control textarea {
+    resize: none;
   }
 
   .app-form-control input::placeholder {
@@ -145,12 +149,12 @@ const GlobalStyle = createGlobalStyle`
     background-color: #ffde03;
     color: #040001;
   }
-  
+
   .admin-layout-left {
     position: fixed;
     width: 18%;
   }
-  
+
   .admin-layout-right {
     position: relative;
     left: 18%;

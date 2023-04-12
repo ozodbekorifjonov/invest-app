@@ -1,11 +1,28 @@
-import GlobalStyle from "./UI/GlobalStyle";
-import AppPath from "./AppPath";
-import Layout from "./components/Layout";
-import { ToastContainer } from "react-toastify";
+import GlobalStyle from './UI/GlobalStyle';
+import AppPath from './AppPath';
+import Layout from './components/Layout';
+import { ToastContainer } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant',
+    });
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
     <Layout>
+      <ScrollToTop />
       <GlobalStyle />
       <AppPath />
       <ToastContainer />

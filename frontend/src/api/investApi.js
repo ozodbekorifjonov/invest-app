@@ -552,3 +552,16 @@ export async function updateRegionAPI(id, name) {
     },
   });
 }
+
+export async function ideaListAPI() {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'get',
+    url: '/api/idea/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}

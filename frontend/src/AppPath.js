@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import SignIn from './pages/sign-in';
 import ClientIdeas from './pages/client/client_ideas';
@@ -22,6 +22,7 @@ import {
   PATH_ADMIN_REGION,
   PATH_ADMIN_USERS,
   PATH_ADMIN_IDEA_DETAILS,
+  PATH_ADMIN_IDEA_CREATE,
 } from './consts';
 import Profile from './pages/profile';
 import SignUp from './pages/sign-up';
@@ -36,6 +37,7 @@ import MinorSector from './pages/admin/minor_sector';
 import Region from './pages/admin/region';
 import User from './pages/admin/users';
 import AdminIdeaDetails from './pages/admin/ideas/admin_ideas_details';
+import AdminIdeaCreate from './pages/admin/ideas/admin_idea_create';
 
 function ProtectedPath() {
   const { isLogged, role } = useAuth();
@@ -74,6 +76,8 @@ function ProtectedPath() {
         return <AdminIdeas />;
       case PATH_ADMIN_IDEA_DETAILS:
         return <AdminIdeaDetails />;
+      case PATH_ADMIN_IDEA_CREATE:
+        return <AdminIdeaCreate />;
       case PATH_ADMIN_PRODUCT_TYPES:
         return <ProductTypes />;
       case PATH_ADMIN_CURRENCIES:
@@ -92,7 +96,6 @@ function ProtectedPath() {
         return <Region />;
       case PATH_ADMIN_USERS:
         return <User />;
-
       default:
         return <Navigate to={PATH_ADMIN_IDEAS} replaced />;
     }
@@ -122,6 +125,7 @@ function AppPath() {
       <Route path={PATH_CLIENT_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEA_DETAILS} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_IDEA_CREATE} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_PRODUCT_TYPES} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_CURRENCIES} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_COUNTRIES} element={ProtectedPath()} />
