@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BlogController;
+use App\Http\Controllers\API\IdeaController;
 use App\Http\Controllers\API\InstrumentController;
 use App\Http\Controllers\API\MajorSectorController;
 use App\Http\Controllers\API\MinorSectorController;
@@ -41,6 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('major-sector', MajorSectorController::class);
     Route::resource('minor-sector', MinorSectorController::class);
     Route::resource('region', RegionController::class);
+    Route::resource('idea', IdeaController::class);
     Route::post('me', [UserController::class, 'show']);
     Route::get('users-list', [UserController::class, 'index']);
     Route::put('update-user/{id}', [UserController::class, 'update']);

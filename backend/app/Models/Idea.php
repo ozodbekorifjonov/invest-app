@@ -16,22 +16,6 @@ class Idea extends Model
         'expiry_date',
         'user_id',
         'content',
-        'instruments',
-        'currency',
-        'region',
-        'country',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'instruments' => 'array',
-        'currency' => 'array',
-        'region' => 'array',
-        'country' => 'array',
     ];
 
     public function user()
@@ -57,5 +41,25 @@ class Idea extends Model
     public function minor_sectors()
     {
         return $this->belongsToMany(MinorSector::class, 'idea_minor_sectors');
+    }
+
+    public function instruments()
+    {
+        return $this->belongsToMany(Instruments::class, 'idea_instruments');
+    }
+
+    public function currencies()
+    {
+        return $this->belongsToMany(Currency::class, 'idea_currencies');
+    }
+
+    public function regions()
+    {
+        return $this->belongsToMany(Region::class, 'idea_regions');
+    }
+
+    public function countries()
+    {
+        return $this->belongsToMany(Country::class, 'idea_countries');
     }
 }

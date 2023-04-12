@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name', 'image'];
+
+    public function ideas()
+    {
+        return $this->belongsToMany(Idea::class, 'idea_countries');
+    }
 }

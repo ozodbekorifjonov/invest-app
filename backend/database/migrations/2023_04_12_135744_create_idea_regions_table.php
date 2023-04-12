@@ -10,10 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('instruments', function (Blueprint $table) {
+        Schema::create('idea_regions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->unsignedInteger('idea_id');
+            $table->unsignedInteger('region_id');
             $table->timestamps();
+
+            $table->foreign('idea_id')->references('id')->on('ideas')->onDelete('cascade');
+            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
         });
     }
 
@@ -22,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('instruments');
+        Schema::dropIfExists('idea_regions');
     }
 };

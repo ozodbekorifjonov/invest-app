@@ -10,4 +10,9 @@ class Currency extends Model
     use HasFactory;
 
     protected $fillable = ['title'];
+
+    public function ideas()
+    {
+        return $this->belongsToMany(Idea::class, 'idea_currencies');
+    }
 }

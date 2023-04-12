@@ -10,4 +10,9 @@ class Instruments extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function ideas()
+    {
+        return $this->belongsToMany(Idea::class, 'idea_instruments');
+    }
 }

@@ -18,10 +18,6 @@ return new class extends Migration {
             $table->dateTime('expiry_date');
             $table->unsignedInteger('user_id');
             $table->longText('content');
-            $table->string('instruments')->nullable();
-            $table->string('currency')->nullable();
-            $table->string('region')->nullable();
-            $table->string('country')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
