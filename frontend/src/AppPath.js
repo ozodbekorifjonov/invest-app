@@ -3,7 +3,7 @@ import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import SignIn from './pages/sign-in';
 import ClientIdeas from './pages/client/client_ideas';
 import { useAuth } from './store/auth-provider';
-import AdminIdeas from './pages/admin/admin_ideas';
+import AdminIdeas from './pages/admin/ideas/admin_ideas';
 import RMIdeas from './pages/rm/rm_ideas';
 import {
   ROLE_ADMIN,
@@ -21,6 +21,7 @@ import {
   PATH_ADMIN_MINOR_SECTOR,
   PATH_ADMIN_REGION,
   PATH_ADMIN_USERS,
+  PATH_ADMIN_IDEA_DETAILS,
 } from './consts';
 import Profile from './pages/profile';
 import SignUp from './pages/sign-up';
@@ -34,6 +35,7 @@ import MajorSector from './pages/admin/major_sector';
 import MinorSector from './pages/admin/minor_sector';
 import Region from './pages/admin/region';
 import User from './pages/admin/users';
+import AdminIdeaDetails from './pages/admin/ideas/admin_ideas_details';
 
 function ProtectedPath() {
   const { isLogged, role } = useAuth();
@@ -70,6 +72,8 @@ function ProtectedPath() {
     switch (pathname) {
       case PATH_ADMIN_IDEAS:
         return <AdminIdeas />;
+      case PATH_ADMIN_IDEA_DETAILS:
+        return <AdminIdeaDetails />;
       case PATH_ADMIN_PRODUCT_TYPES:
         return <ProductTypes />;
       case PATH_ADMIN_CURRENCIES:
@@ -117,6 +121,7 @@ function AppPath() {
       <Route path={'/profile'} element={<Profile />} />
       <Route path={PATH_CLIENT_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEAS} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_IDEA_DETAILS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_PRODUCT_TYPES} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_CURRENCIES} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_COUNTRIES} element={ProtectedPath()} />

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../store/auth-provider';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_RM } from '../consts';
 
 function Layout({ children }) {
-  const { isLogged, role } = useAuth();
+  const { isLogged, role, userData, getUserData } = useAuth();
 
   const pathByUserRole = (path) => {
     switch (role) {
@@ -20,12 +20,16 @@ function Layout({ children }) {
     }
   };
 
+  useEffect(() => {
+    getUserData();
+  }, [getUserData]);
+
   if (isLogged) {
     return (
       <section className="user-page">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div className="px-sm-2 px-0 bg-dark admin-layout-left">
               <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <Link
                   to="/"
@@ -134,12 +138,14 @@ function Layout({ children }) {
                       height="30"
                       className="rounded-circle"
                     />
-                    <span className="d-none d-sm-inline mx-1">Ozodbek Oripjonov</span>
+                    <span className="d-none d-sm-inline mx-1">
+                      {userData?.firstname} {userData?.lastname}
+                    </span>
                   </Link>
                 </div>
               </div>
             </div>
-            <div className="col py-3">{children}</div>
+            <div className="py-3 admin-layout-right">{children}</div>
           </div>
         </div>
       </section>

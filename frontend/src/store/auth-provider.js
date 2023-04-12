@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
-import { ROLE_ADMIN, TOKEN, USER_ID } from '../consts';
+import { ROLE_ADMIN, ROLE_CLIENT, TOKEN, USER_ID } from '../consts';
 import {
   getUserInfoAPI,
   signInAPI,
@@ -120,6 +120,7 @@ function useProvideAuth() {
     try {
       const response = await getUserInfoAPI();
       setUserData(response.data.data);
+      setRole(response.data.data.role);
     } catch (e) {
       toast.error(e.response.data.message);
     }

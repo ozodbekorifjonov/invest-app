@@ -145,6 +145,17 @@ const GlobalStyle = createGlobalStyle`
     background-color: #ffde03;
     color: #040001;
   }
+  
+  .admin-layout-left {
+    position: fixed;
+    width: 18%;
+  }
+  
+  .admin-layout-right {
+    position: relative;
+    left: 18%;
+    width: 82%;
+  }
 `;
 
 export default GlobalStyle;

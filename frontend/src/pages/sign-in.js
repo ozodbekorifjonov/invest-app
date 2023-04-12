@@ -60,7 +60,6 @@ function SignIn() {
     e.preventDefault();
 
     const response = await signIn(email.current.value, password.current.value);
-    console.log(response);
     if (response.success) {
       navigate('/');
     }
