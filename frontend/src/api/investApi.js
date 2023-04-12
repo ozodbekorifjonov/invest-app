@@ -565,3 +565,16 @@ export async function ideaListAPI() {
     },
   });
 }
+
+export async function ideaDetailsAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: `/api/idea/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}

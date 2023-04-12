@@ -5,7 +5,7 @@ import { useAuth } from '../store/auth-provider';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_RM } from '../consts';
 
 function Layout({ children }) {
-  const { isLogged, role, userData, getUserData } = useAuth();
+  const { isLogged, role, userData } = useAuth();
 
   const pathByUserRole = (path) => {
     switch (role) {
@@ -19,10 +19,6 @@ function Layout({ children }) {
         return '/';
     }
   };
-
-  useEffect(() => {
-    getUserData();
-  }, [getUserData]);
 
   if (isLogged) {
     return (

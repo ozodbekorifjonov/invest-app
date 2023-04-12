@@ -14,7 +14,7 @@ class IdeaController extends BaseController
     public function index()
     {
 
-        $ideas = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors')->get();
+        $ideas = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'user')->get();
 
         return $this->sendResponse($ideas, 'Idea fetched.');
     }
@@ -35,12 +35,20 @@ class IdeaController extends BaseController
         }
         $idea = Idea::create($input);
         $idea->risk_ratings()->attach($request->input('risk_ratings'));
+        $idea->product_types()->attach($request->input('product_types'));
+        $idea->major_sectors()->attach($request->input('major_sectors'));
+        $idea->minor_sectors()->attach($request->input('minor_sectors'));
+        $idea->instruments()->attach($request->input('instruments'));
+        $idea->currencies()->attach($request->input('currencies'));
+        $idea->regions()->attach($request->input('regions'));
+        $idea->countries()->attach($request->input('countries'));
+        $idea->user()->attach($user->id);
         return $this->sendResponse($idea, 'Idea created.');
     }
 
     public function show($id)
     {
-        $idea = Idea::find($id);
+        $idea = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'user')->find($id);
         if (is_null($idea)) {
             return $this->sendError('Idea does not exist.');
         }

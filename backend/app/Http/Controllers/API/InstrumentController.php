@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Instruments;
+use App\Models\Instrument;
 use Illuminate\Http\Request;
 
 class InstrumentController extends Controller
@@ -13,7 +13,7 @@ class InstrumentController extends Controller
      */
     public function index()
     {
-        $instruments = Instruments::orderBy('updated_at', 'DESC')->get();
+        $instruments = Instrument::orderBy('updated_at', 'DESC')->get();
         return response()->json(['success' => true, 'data' => $instruments], 200);
     }
 
@@ -33,7 +33,7 @@ class InstrumentController extends Controller
         $storeData = $request->validate([
             'name' => 'required|max:255',
         ]);
-        $newInstrument = Instruments::create($storeData);
+        $newInstrument = Instrument::create($storeData);
         if ($newInstrument) {
             return response()->json(['data' => $newInstrument, 'message' => 'Created successfully'], 201);
         }
@@ -52,7 +52,7 @@ class InstrumentController extends Controller
      */
     public function edit(string $id)
     {
-        $instrument = Instruments::find($id);
+        $instrument = Instrument::find($id);
         return response()->json(['status' => 200, 'riskRating' => $instrument]);
     }
 
@@ -64,7 +64,7 @@ class InstrumentController extends Controller
         $updateData = $request->validate([
             'name' => 'required|max:255',
         ]);
-        Instruments::whereId($id)->update($updateData);
+        Instrument::whereId($id)->update($updateData);
         return response()->json(['message' => 'Updated successfully'], 200);
     }
 
@@ -73,7 +73,7 @@ class InstrumentController extends Controller
      */
     public function destroy(string $id)
     {
-        $instrument = Instruments::find($id);
+        $instrument = Instrument::find($id);
         if ($instrument->delete()) {
             return response()->json(['message' => 'Deleted successfully'], 200);
         }

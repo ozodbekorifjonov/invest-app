@@ -34,15 +34,26 @@ Route::put('user-recommends/{id}', [UserController::class, 'userRecommendsUpdate
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('blogs', BlogController::class);
-    Route::resource('product-types', ProductTypeController::class);
-    Route::resource('country', CountryController::class);
-    Route::resource('currency', CurrencyController::class);
+
+    Route::post('product-types', [ProductTypeController::class, 'store']);
+    Route::put('product-types/{id}', [ProductTypeController::class, 'update']);
+    Route::delete('product-types/{id}', [ProductTypeController::class, 'destroy']);
+
+    Route::post('country', [CountryController::class, 'store']);
+    Route::put('country/{id}', [CountryController::class, 'update']);
+    Route::delete('country/{id}', [CountryController::class, 'destroy']);
+
+    Route::post('currency', [CurrencyController::class, 'store']);
+    Route::put('currency/{id}', [CurrencyController::class, 'update']);
+    Route::delete('currency/{id}', [CurrencyController::class, 'destroy']);
+
     Route::resource('risk-rating', RiskRatingController::class);
     Route::resource('instrument', InstrumentController::class);
     Route::resource('major-sector', MajorSectorController::class);
     Route::resource('minor-sector', MinorSectorController::class);
     Route::resource('region', RegionController::class);
     Route::resource('idea', IdeaController::class);
+    Route::post('idea/{id}', [IdeaController::class, 'show']);
     Route::post('me', [UserController::class, 'show']);
     Route::get('users-list', [UserController::class, 'index']);
     Route::put('update-user/{id}', [UserController::class, 'update']);

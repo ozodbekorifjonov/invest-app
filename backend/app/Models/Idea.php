@@ -45,7 +45,7 @@ class Idea extends Model
 
     public function instruments()
     {
-        return $this->belongsToMany(Instruments::class, 'idea_instruments');
+        return $this->belongsToMany(Instrument::class, 'idea_instruments');
     }
 
     public function currencies()
