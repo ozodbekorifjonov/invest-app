@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Markdown from '../../../UI/Markdown';
-import { useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useIdeas } from '../../../store/idea-provider';
 import Loader from '../../../UI/Loader';
 import FormatDateTime from '../../../helper/formatDateTime';
+import { PATH_ADMIN_IDEA_CREATE } from '../../../consts';
 
 const CardStyle = styled.div`
   box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px, rgb(51, 51, 51) 0 0 0 3px;
@@ -25,8 +26,6 @@ function AdminIdeaDetails() {
   useEffect(() => {
     getIdeaDetails(id);
   }, [getIdeaDetails, id]);
-
-  console.log(ideaDetails);
 
   return (
     <div className="row">
@@ -116,7 +115,12 @@ function AdminIdeaDetails() {
             </div>
             <div className="row">
               <div className="col-3 offset-9">
-                <button className="app-form-button app-button-warning w-100">Edit</button>
+                <Link
+                  to={`${PATH_ADMIN_IDEA_CREATE}?id=${ideaDetails?.id}`}
+                  className="app-form-button app-button-warning w-100 text-decoration-none d-block text-black"
+                >
+                  Edit
+                </Link>
               </div>
             </div>
           </CardStyle>

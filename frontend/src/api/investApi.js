@@ -578,3 +578,93 @@ export async function ideaDetailsAPI(id) {
     },
   });
 }
+
+export async function createIdeaAPI(obj) {
+  const token = localStorage.getItem(TOKEN);
+
+  const title = obj.title;
+  const abstract = obj.abstract;
+  const publish_date = obj.publish_date;
+  const expiry_date = obj.expiry_date;
+  const content = obj.content;
+  const user_id = obj.user_id;
+  const risk_ratings = obj.risk_ratings;
+  const product_types = obj.product_types;
+  const major_sectors = obj.major_sectors;
+  const minor_sectors = obj.minor_sectors;
+  const instruments = obj.instruments;
+  const currencies = obj.currencies;
+  const regions = obj.regions;
+  const countries = obj.countries;
+
+  return axios({
+    method: 'post',
+    url: `/api/idea/`,
+    data: {
+      title,
+      abstract,
+      publish_date,
+      expiry_date,
+      content,
+      user_id,
+      risk_ratings,
+      product_types,
+      major_sectors,
+      minor_sectors,
+      instruments,
+      currencies,
+      regions,
+      countries,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateIdeaAPI(obj, id) {
+  console.log('hello');
+  console.log(obj, id);
+  const token = localStorage.getItem(TOKEN);
+
+  const title = obj.title;
+  const abstract = obj.abstract;
+  const publish_date = obj.publish_date;
+  const expiry_date = obj.expiry_date;
+  const content = obj.content;
+  const user_id = obj.user_id;
+  const risk_ratings = obj.risk_ratings;
+  const product_types = obj.product_types;
+  const major_sectors = obj.major_sectors;
+  const minor_sectors = obj.minor_sectors;
+  const instruments = obj.instruments;
+  const currencies = obj.currencies;
+  const regions = obj.regions;
+  const countries = obj.countries;
+
+  return axios({
+    method: 'put',
+    url: `/api/idea/${id}`,
+    data: {
+      title,
+      abstract,
+      publish_date,
+      expiry_date,
+      content,
+      user_id,
+      risk_ratings,
+      product_types,
+      major_sectors,
+      minor_sectors,
+      instruments,
+      currencies,
+      regions,
+      countries,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}

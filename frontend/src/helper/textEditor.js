@@ -13,7 +13,7 @@ const modules = {
 };
 
 function TextEditor(props) {
-  const { getContentValue, className } = props;
+  const { getContentValue, className, defaultValue } = props;
 
   return (
     <ReactQuill
@@ -22,6 +22,7 @@ function TextEditor(props) {
       placeholder="Content"
       onChange={getContentValue}
       modules={modules}
+      defaultValue={defaultValue}
     />
   );
 }

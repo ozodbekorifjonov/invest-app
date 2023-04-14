@@ -41,9 +41,9 @@ function useProvideIdeas() {
     try {
       setLoading(true);
       const res = await ideaDetailsAPI(id);
-      console.log(res);
       setLoading(false);
       setIdeaDetails(res.data.data);
+      return res.data.data;
     } catch (error) {
       toast.error(error.message);
       setLoading(false);

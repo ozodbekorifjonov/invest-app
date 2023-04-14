@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import SignIn from './pages/sign-in';
 import ClientIdeas from './pages/client/client_ideas';
@@ -6,23 +6,23 @@ import { useAuth } from './store/auth-provider';
 import AdminIdeas from './pages/admin/ideas/admin_ideas';
 import RMIdeas from './pages/rm/rm_ideas';
 import {
-  ROLE_ADMIN,
-  ROLE_CLIENT,
-  ROLE_RM,
-  PATH_ADMIN_IDEAS,
-  PATH_RM_IDEAS,
-  PATH_CLIENT_IDEAS,
-  PATH_ADMIN_PRODUCT_TYPES,
-  PATH_ADMIN_CURRENCIES,
   PATH_ADMIN_COUNTRIES,
-  PATH_ADMIN_RISK_RATING,
+  PATH_ADMIN_CURRENCIES,
+  PATH_ADMIN_IDEA_CREATE,
+  PATH_ADMIN_IDEA_DETAILS,
+  PATH_ADMIN_IDEAS,
   PATH_ADMIN_INSTRUMENTS,
   PATH_ADMIN_MAJOR_SECTOR,
   PATH_ADMIN_MINOR_SECTOR,
+  PATH_ADMIN_PRODUCT_TYPES,
   PATH_ADMIN_REGION,
+  PATH_ADMIN_RISK_RATING,
   PATH_ADMIN_USERS,
-  PATH_ADMIN_IDEA_DETAILS,
-  PATH_ADMIN_IDEA_CREATE,
+  PATH_CLIENT_IDEAS,
+  PATH_RM_IDEAS,
+  ROLE_ADMIN,
+  ROLE_CLIENT,
+  ROLE_RM,
 } from './consts';
 import Profile from './pages/profile';
 import SignUp from './pages/sign-up';
