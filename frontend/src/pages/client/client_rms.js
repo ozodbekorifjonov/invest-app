@@ -23,8 +23,6 @@ function ClientRms() {
                 <th scope="col">Last name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Telephone</th>
-                <th scope="col">Role</th>
-                <th scope="col">Updated At</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -37,11 +35,6 @@ function ClientRms() {
                     <td>{item.lastname}</td>
                     <td>{item.email}</td>
                     <td>{item.telephone}</td>
-                    <td>{item.role}</td>
-                    <td>
-                      <FormatDateTime date={item.updated_at} type="DATE" />,{' '}
-                      <FormatDateTime date={item.updated_at} type="TIME" />
-                    </td>
                     <td>
                       <a
                         className="app-form-button-sm app-button-success mx-1 text-decoration-none"
