@@ -18,11 +18,13 @@ import {
   PATH_ADMIN_REGION,
   PATH_ADMIN_RISK_RATING,
   PATH_ADMIN_USERS,
+  PATH_CLIENT_IDEA_DETAILS,
   PATH_CLIENT_IDEAS,
   PATH_RM_IDEAS,
   ROLE_ADMIN,
   ROLE_CLIENT,
   ROLE_RM,
+  USER_ROLE,
 } from './consts';
 import Profile from './pages/profile';
 import SignUp from './pages/sign-up';
@@ -38,9 +40,11 @@ import Region from './pages/admin/region';
 import User from './pages/admin/users';
 import AdminIdeaDetails from './pages/admin/ideas/admin_ideas_details';
 import AdminIdeaCreate from './pages/admin/ideas/admin_idea_create';
+import ClientIdeaDetails from './pages/client/client_idea_details';
 
 function ProtectedPath() {
-  const { isLogged, role } = useAuth();
+  const { isLogged } = useAuth();
+  const role = localStorage.getItem(USER_ROLE);
   const { pathname } = useLocation();
 
   if (!isLogged) {
@@ -64,6 +68,8 @@ function ProtectedPath() {
     switch (pathname) {
       case PATH_CLIENT_IDEAS:
         return <ClientIdeas />;
+      case PATH_CLIENT_IDEA_DETAILS:
+        return <ClientIdeaDetails />;
       default:
         return <Navigate to={PATH_CLIENT_IDEAS} replaced />;
     }
@@ -123,6 +129,7 @@ function AppPath() {
       <Route path={'/recommend'} element={<Recommend />} />
       <Route path={'/profile'} element={<Profile />} />
       <Route path={PATH_CLIENT_IDEAS} element={ProtectedPath()} />
+      <Route path={PATH_CLIENT_IDEA_DETAILS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEA_DETAILS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEA_CREATE} element={ProtectedPath()} />

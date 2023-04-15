@@ -2,10 +2,14 @@ import React from 'react';
 import Logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../store/auth-provider';
-import { ROLE_ADMIN, ROLE_CLIENT, ROLE_RM } from '../consts';
+import { ROLE_ADMIN, ROLE_CLIENT, ROLE_RM, USER_ROLE } from '../consts';
 
 function Layout({ children }) {
-  const { isLogged, role, userData } = useAuth();
+  const { isLogged } = useAuth();
+
+  const role = localStorage.getItem(USER_ROLE);
+  const firstname = localStorage.getItem('firstname');
+  const lastname = localStorage.getItem('lastname');
 
   const pathByUserRole = (path) => {
     switch (role) {
@@ -45,81 +49,126 @@ function Layout({ children }) {
                       <span className="ms-1 d-none d-sm-inline">Ideas</span>
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link to={pathByUserRole('users')} className="nav-link align-middle px-0">
-                      <i className="fs-4 bi-people"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Users</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={pathByUserRole('holdings')} className="nav-link align-middle px-0">
-                      <i className="fs-4 bi-wallet2"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">My holdings</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={pathByUserRole('contact')} className="nav-link align-middle px-0">
-                      <i className="fs-4 bi-telephone"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Contact RM</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to={pathByUserRole('product-types')}
-                      className="nav-link align-middle px-0"
-                    >
-                      <i className="fs-4 bi-box"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Product Types</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={pathByUserRole('currencies')} className="nav-link align-middle px-0">
-                      <i className="fs-4 bi-currency-exchange"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Currencies</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={pathByUserRole('countries')} className="nav-link align-middle px-0">
-                      <i className="fs-4 bi-globe-americas"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Countries</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={pathByUserRole('risk-rating')} className="nav-link align-middle px-0">
-                      <i className="fs-4 bi-asterisk"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Risk ratings</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={pathByUserRole('instruments')} className="nav-link align-middle px-0">
-                      <i className="fs-4 bi-sliders"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Instruments</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to={pathByUserRole('major-sector')}
-                      className="nav-link align-middle px-0"
-                    >
-                      <i className="fs-4 bi-layers-fill"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Major sectors</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to={pathByUserRole('minor-sector')}
-                      className="nav-link align-middle px-0"
-                    >
-                      <i className="fs-4 bi-layers"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Minor sectors</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={pathByUserRole('region')} className="nav-link align-middle px-0">
-                      <i className="fs-4 bi-globe-americas"></i>{' '}
-                      <span className="ms-1 d-none d-sm-inline">Regions</span>
-                    </Link>
-                  </li>
+                  {(role === ROLE_ADMIN || role === ROLE_RM) && (
+                    <>
+                      <li className="nav-item">
+                        <Link to={pathByUserRole('users')} className="nav-link align-middle px-0">
+                          <i className="fs-4 bi-people"></i>{' '}
+                          <span className="ms-1 d-none d-sm-inline">Users</span>
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                  {role === ROLE_RM && (
+                    <>
+                      <li className="nav-item">
+                        <Link to={pathByUserRole('potential-customers')} className="nav-link align-middle px-0">
+                          <i className="fs-4 bi-person-gear"></i>{' '}
+                          <span className="ms-1 d-none d-sm-inline">Potential customers</span>
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                  {role === ROLE_CLIENT && (
+                    <li className="nav-item">
+                      <Link to={pathByUserRole('holdings')} className="nav-link align-middle px-0">
+                        <i className="fs-4 bi-wallet2"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">My holdings</span>
+                      </Link>
+                    </li>
+                  )}
+
+                  {(role === ROLE_CLIENT || role === ROLE_ADMIN) && (
+                    <li className="nav-item">
+                      <Link to={pathByUserRole('contact')} className="nav-link align-middle px-0">
+                        <i className="fs-4 bi-telephone"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Contact RM</span>
+                      </Link>
+                    </li>
+                  )}
+
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link
+                        to={pathByUserRole('product-types')}
+                        className="nav-link align-middle px-0"
+                      >
+                        <i className="fs-4 bi-box"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Product Types</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link
+                        to={pathByUserRole('currencies')}
+                        className="nav-link align-middle px-0"
+                      >
+                        <i className="fs-4 bi-currency-exchange"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Currencies</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link to={pathByUserRole('countries')} className="nav-link align-middle px-0">
+                        <i className="fs-4 bi-globe-americas"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Countries</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link
+                        to={pathByUserRole('risk-rating')}
+                        className="nav-link align-middle px-0"
+                      >
+                        <i className="fs-4 bi-asterisk"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Risk ratings</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link
+                        to={pathByUserRole('instruments')}
+                        className="nav-link align-middle px-0"
+                      >
+                        <i className="fs-4 bi-sliders"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Instruments</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link
+                        to={pathByUserRole('major-sector')}
+                        className="nav-link align-middle px-0"
+                      >
+                        <i className="fs-4 bi-layers-fill"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Major sectors</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link
+                        to={pathByUserRole('minor-sector')}
+                        className="nav-link align-middle px-0"
+                      >
+                        <i className="fs-4 bi-layers"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Minor sectors</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link to={pathByUserRole('region')} className="nav-link align-middle px-0">
+                        <i className="fs-4 bi-globe-americas"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Regions</span>
+                      </Link>
+                    </li>
+                  )}
                 </ul>
                 <div className="pb-4">
                   <Link
@@ -127,15 +176,8 @@ function Layout({ children }) {
                     className="d-flex align-items-center text-white text-decoration-none"
                     id="dropdownUser1"
                   >
-                    <img
-                      src="https://github.com/mdo.png"
-                      alt="hugenerd"
-                      width="30"
-                      height="30"
-                      className="rounded-circle"
-                    />
                     <span className="d-none d-sm-inline mx-1">
-                      {userData?.firstname} {userData?.lastname}
+                      {firstname} {lastname}
                     </span>
                   </Link>
                 </div>

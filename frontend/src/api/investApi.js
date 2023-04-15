@@ -624,8 +624,6 @@ export async function createIdeaAPI(obj) {
 }
 
 export async function updateIdeaAPI(obj, id) {
-  console.log('hello');
-  console.log(obj, id);
   const token = localStorage.getItem(TOKEN);
 
   const title = obj.title;
@@ -661,6 +659,23 @@ export async function updateIdeaAPI(obj, id) {
       currencies,
       regions,
       countries,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateIdeaHolderAPI($users, id) {
+  const token = localStorage.getItem(TOKEN);
+  console.log(id, $users);
+
+  return axios({
+    method: 'post',
+    url: `/api/idea-holder/${id}`,
+    data: {
+      $users,
     },
     headers: {
       Authorization: `Bearer ${token}`,

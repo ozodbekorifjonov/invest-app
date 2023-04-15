@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../store/auth-provider';
+import { useNavigate } from 'react-router-dom';
 
 const TitleStyle = styled.div`
   h5 {
@@ -13,7 +14,8 @@ function Profile() {
   const lastname_ref = useRef();
   const telephone_ref = useRef();
   const email_ref = useRef();
-  const { userData, getUserData, updateUserData } = useAuth();
+  const { userData, getUserData, updateUserData, logOut } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUserData();
@@ -27,6 +29,12 @@ function Profile() {
     const email = email_ref.current.value || userData.email;
 
     await updateUserData(userData.id, firstname, lastname, telephone, email);
+  };
+
+  const handleLogout = () => {
+    logOut();
+    navigate('/sign-in');
+    navigate(0);
   };
 
   return (
@@ -81,6 +89,11 @@ function Profile() {
                   <button className="app-form-button app-button-primary w-100">Change</button>
                 </form>
               </div>
+            </div>
+            <div className="col-4">
+              <button onClick={handleLogout} className="app-form-button app-button-danger w-100">
+                Log out
+              </button>
             </div>
           </div>
         </div>

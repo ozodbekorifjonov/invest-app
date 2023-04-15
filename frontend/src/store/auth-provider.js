@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
-import { ROLE_ADMIN, ROLE_CLIENT, TOKEN, USER_ID } from '../consts';
+import { ROLE_ADMIN, TOKEN, USER_ID, USER_ROLE } from '../consts';
 import {
   getUserInfoAPI,
   signInAPI,
@@ -13,12 +13,12 @@ const ContextProps = {
   isLogged: false,
   role: ROLE_ADMIN,
   userData: null,
-  signIn: (email, password) => {},
-  signUp: (newAccount) => {},
-  updateUserRecommends: (id, selectedProductTypes, selectedCurrencies, selectedCountries) => {},
+  signIn: () => {},
+  signUp: () => {},
+  updateUserRecommends: () => {},
   logOut: () => {},
   getUserData: () => {},
-  updateUserData: (id, firstname, lastname, telephone, email) => {},
+  updateUserData: () => {},
 };
 
 const AuthContext = createContext(ContextProps);
@@ -64,6 +64,9 @@ function useProvideAuth() {
       const response = await signInAPI(email, password);
       setLogged(true);
       setRole(response.data.data.user.role);
+      localStorage.setItem('firstname', response.data.data.user.firstname);
+      localStorage.setItem('lastname', response.data.data.user.lastname);
+      localStorage.setItem(USER_ROLE, response.data.data.user.role);
       localStorage.setItem(USER_ID, response.data.data.user.id);
       localStorage.setItem(TOKEN, response.data.data.token);
       return response.data;
@@ -120,13 +123,16 @@ function useProvideAuth() {
     try {
       const response = await getUserInfoAPI();
       setUserData(response.data.data);
-      setRole(response.data.data.role);
+      setRole(response.data.data.user.role);
+      localStorage.setItem(USER_ROLE, response.data.data.user.role);
+      localStorage.setItem('firstname', response.data.data.user.firstname);
+      localStorage.setItem('lastname', response.data.data.user.lastname);
     } catch (e) {
       toast.error(e.response.data.message);
     }
   }, []);
 
-  const logOut = async () => {};
+  const logOut = async () => localStorage.clear();
 
   return {
     isLogged,

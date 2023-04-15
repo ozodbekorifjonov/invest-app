@@ -187,16 +187,17 @@ function AdminIdeaCreate() {
               />
             </div>
             <TextEditorStyle>
-              {id &&
-                (ideaDetails ? (
+              {id ? (
+                ideaDetails && (
                   <TextEditorComp
                     getContentValue={getContentValue}
                     className="editor-input"
                     content={ideaDetails.content}
                   />
-                ) : (
-                  <TextEditor getContentValue={getContentValue} className="editor-input" />
-                ))}
+                )
+              ) : (
+                <TextEditor getContentValue={getContentValue} className="editor-input" />
+              )}
             </TextEditorStyle>
             <div className="app-form-control">
               <select required={true} onChange={(event) => setRiskRating(event.target.value)}>
