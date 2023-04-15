@@ -90,8 +90,9 @@ class IdeaController extends BaseController
     public function updateHolder(Request $request, string $id)
     {
         $idea = Idea::findOrFail($id);
+        $user_id = $request->input('user_id');
 
-        $idea->holders()->attach($request->input('users'));
+        $idea->holders()->sync([$user_id]);
         return $this->sendResponse($idea, 'Congrats!!! You are investor.');
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Idea;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
@@ -98,5 +99,32 @@ class UserController extends BaseController
         $user = User::whereId($id)->update($updateData);
 
         return $this->sendResponse($user, 'User role updated.');
+    }
+
+    public function holdingsList(string $id)
+    {
+        $holdings = Idea::whereHas('holders', function ($q) use ($id) {
+            $q->where('user_id', '=', $id);
+        })->with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'user')->get();
+
+        return $this->sendResponse($holdings, 'Holdings list.');
+    }
+
+    public function usersListByRole(Request $request)
+    {
+
+        $role = $request->input('role');
+
+        if ($role == 'RM') {
+            $users = User::where('role', 'RM')->get();
+            return $this->sendResponse($users, 'Users list by RM role.');
+        }
+
+        if ($role == 'CLIENT') {
+            $users = User::where('role', 'CLIENT')->get();
+            return $this->sendResponse($users, 'Users list by CLIENT role.');
+        }
+
+        return $this->sendResponse([], 'Empty users list.');
     }
 }

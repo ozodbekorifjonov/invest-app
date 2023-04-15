@@ -59,4 +59,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('users-list', [UserController::class, 'index']);
     Route::put('update-user/{id}', [UserController::class, 'update']);
     Route::put('update-user-role/{id}', [UserController::class, 'updateUserRole']);
+    Route::post('user-holdings/{id}', [UserController::class, 'holdingsList']);
+    Route::post('user-list-by-role', [UserController::class, 'usersListByRole']);
 });
