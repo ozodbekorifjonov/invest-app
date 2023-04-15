@@ -2,11 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useIdeas } from '../../store/idea-provider';
 import { Link } from 'react-router-dom';
-import {
-  PATH_ADMIN_IDEA_CREATE,
-  PATH_ADMIN_IDEA_DETAILS,
-  PATH_CLIENT_IDEA_DETAILS,
-} from '../../consts';
+import { PATH_CLIENT_IDEA_DETAILS } from '../../consts';
 import Loader from '../../UI/Loader';
 import FormatDateTime from '../../helper/formatDateTime';
 

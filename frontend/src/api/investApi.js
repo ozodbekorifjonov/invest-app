@@ -667,15 +667,43 @@ export async function updateIdeaAPI(obj, id) {
   });
 }
 
-export async function updateIdeaHolderAPI($users, id) {
+export async function updateIdeaHolderAPI(user_id, id) {
   const token = localStorage.getItem(TOKEN);
-  console.log(id, $users);
 
   return axios({
     method: 'post',
     url: `/api/idea-holder/${id}`,
     data: {
-      $users,
+      user_id,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function holdingsListAPI(user_id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: `/api/user-holdings/${user_id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function userListByRoleAPI(role) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: `/api/user-list-by-role/`,
+    data: {
+      role,
     },
     headers: {
       Authorization: `Bearer ${token}`,
