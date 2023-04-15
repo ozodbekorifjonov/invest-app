@@ -9,14 +9,7 @@ class Idea extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'abstract',
-        'publish_date',
-        'expiry_date',
-        'user_id',
-        'content',
-    ];
+    protected $fillable = ['title', 'abstract', 'publish_date', 'expiry_date', 'content', 'user_id'];
 
     public function user()
     {

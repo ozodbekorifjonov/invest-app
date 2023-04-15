@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('idea_possible_clients', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('idea_id');
-            $table->unsignedInteger('possible_client_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
 
             $table->foreign('idea_id')->references('id')->on('ideas')->onDelete('cascade');
-            $table->foreign('possible_client_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

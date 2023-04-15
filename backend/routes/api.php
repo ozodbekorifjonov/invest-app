@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('region', RegionController::class);
     Route::resource('idea', IdeaController::class);
     Route::post('idea/{id}', [IdeaController::class, 'show']);
+    Route::post('idea-holder/{id}', [IdeaController::class, 'updateHolder']);
     Route::post('me', [UserController::class, 'show']);
     Route::get('users-list', [UserController::class, 'index']);
     Route::put('update-user/{id}', [UserController::class, 'update']);

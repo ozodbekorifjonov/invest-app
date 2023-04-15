@@ -7,7 +7,6 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Idea;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class IdeaController extends BaseController
@@ -15,7 +14,7 @@ class IdeaController extends BaseController
     public function index()
     {
 
-        $ideas = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'user')->orderBy('updated_at', 'DESC')->get();
+        $ideas = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'holders', 'user')->orderBy('updated_at', 'DESC')->get();
 
         return $this->sendResponse($ideas, 'Idea fetched.');
     }
@@ -86,6 +85,14 @@ class IdeaController extends BaseController
         $idea->countries()->sync($request->input('countries'));
 
         return $this->sendResponse($idea, 'Idea created.');
+    }
+
+    public function updateHolder(Request $request, string $id)
+    {
+        $idea = Idea::findOrFail($id);
+
+        $idea->holders()->attach($request->input('users'));
+        return $this->sendResponse($idea, 'Congrats!!! You are investor.');
     }
 
     public function destroy(Idea $idea)
