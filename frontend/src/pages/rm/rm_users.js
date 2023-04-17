@@ -1,12 +1,12 @@
 import React from 'react';
 import useAsyncLoader from '../../hooks/useAsyncLoader';
 import { userListByRoleAPI } from '../../api/investApi';
-import { ROLE_RM } from '../../consts';
+import { ROLE_CLIENT } from '../../consts';
 import Loader from '../../UI/Loader';
 
-function ClientRms() {
-  const { isLoading, data } = useAsyncLoader(userListByRoleAPI, ROLE_RM);
-  const rmList = data?.data?.data;
+function RmUsers() {
+  const { isLoading, data } = useAsyncLoader(userListByRoleAPI, ROLE_CLIENT);
+  const userList = data?.data?.data;
 
   return (
     <div className="row">
@@ -26,8 +26,8 @@ function ClientRms() {
               </tr>
             </thead>
             <tbody>
-              {rmList &&
-                rmList.map((item, id) => (
+              {userList &&
+                userList.map((item, id) => (
                   <tr key={id}>
                     <th scope="row">{id + 1}</th>
                     <td>{item.firstname}</td>
@@ -54,4 +54,4 @@ function ClientRms() {
   );
 }
 
-export default ClientRms;
+export default RmUsers;

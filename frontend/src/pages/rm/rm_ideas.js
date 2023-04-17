@@ -1,7 +1,127 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { useIdeas } from '../../store/idea-provider';
+import { Link } from 'react-router-dom';
+import { PATH_CLIENT_IDEA_DETAILS, PATH_RM_IDEA_DETAILS } from '../../consts';
+import Loader from '../../UI/Loader';
+import FormatDateTime from '../../helper/formatDateTime';
 
-function RMIdeas(props) {
-  return <div>RM ideas</div>;
-}
+const CardStyle = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px, rgb(51, 51, 51) 0 0 0 3px;
+  padding: 30px 15px;
+  margin-bottom: 15px;
 
-export default RMIdeas;
+  .flag-img {
+    width: 24px;
+    object-fit: contain;
+  }
+`;
+
+export const RMIdeas = () => {
+  const { isLoading, ideasList, getIdeasList } = useIdeas();
+
+  useEffect(() => {
+    getIdeasList();
+  }, [getIdeasList]);
+
+  return (
+    <div className="row">
+      <div className="col-10 offset-1">
+        <h5>Ideas list</h5>
+        {isLoading && <Loader />}
+        {!isLoading &&
+          ideasList?.map((item, id) => (
+            <CardStyle key={id}>
+              <h4>{item.title}</h4>
+              <hr />
+              <p>{item.abstract}</p>
+              <div>
+                <span>
+                  <b>Risk rating:</b>{' '}
+                  {item.risk_ratings.map((risk, i) => (
+                    <span key={i}>{risk.name}</span>
+                  ))}
+                </span>
+              </div>
+              <div>
+                <span>
+                  <b>Instruments:</b>{' '}
+                  {item.instruments.map((instrument, i) => (
+                    <span key={i}>{instrument.name}, </span>
+                  ))}
+                </span>
+              </div>
+              <div>
+                <span>
+                  <b>Currency:</b>{' '}
+                  {item.currencies.map((currency, i) => (
+                    <span key={i}>{currency.title}, </span>
+                  ))}
+                </span>
+              </div>
+              <div>
+                <span>
+                  <b>Major Sector:</b>{' '}
+                  {item.major_sectors.map((major_sector, i) => (
+                    <span key={i}>{major_sector.name} </span>
+                  ))}
+                </span>
+              </div>
+              <div>
+                <span>
+                  <b>Minor Sector:</b>{' '}
+                  {item.minor_sectors.map((minor_sector, i) => (
+                    <span key={i}>{minor_sector.name} </span>
+                  ))}
+                </span>
+              </div>
+              <div>
+                <span>
+                  <b>Region:</b>{' '}
+                  {item.regions.map((region, i) => (
+                    <span key={i}>{region.name}, </span>
+                  ))}
+                </span>
+              </div>
+              <div>
+                <span>
+                  <b>Country:</b>{' '}
+                  {item.countries.map((country, i) => (
+                    <span key={i}>
+                      <img
+                        className="flag-img"
+                        src={`${process.env.REACT_APP_API_URL}images/${country.image}`}
+                        alt={country.name}
+                      />{' '}
+                      {country.name},{' '}
+                    </span>
+                  ))}
+                </span>
+              </div>
+              <span>
+                <b>Publish date:</b> <FormatDateTime date={item.publish_date} type="DATE" />,{' '}
+                <FormatDateTime date={item.publish_date} type="TIME" />
+                <b> Expiry Date:</b> <FormatDateTime date={item.expiry_date} type="DATE" />,{' '}
+                <FormatDateTime date={item.expiry_date} type="TIME" />
+              </span>
+              <div>
+                <span>
+                  <b>Author:</b> {item.user.firstname} {item.user.lastname}
+                </span>
+              </div>
+              <div className="row">
+                <div className="col-3 offset-9">
+                  <Link
+                    to={`${PATH_RM_IDEA_DETAILS}?id=${item.id}`}
+                    className="app-form-button app-button-primary w-100 text-decoration-none d-block text-white"
+                  >
+                    Read more
+                  </Link>
+                </div>
+              </div>
+            </CardStyle>
+          ))}
+      </div>
+    </div>
+  );
+};

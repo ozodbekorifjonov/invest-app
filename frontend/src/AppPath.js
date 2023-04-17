@@ -4,7 +4,6 @@ import SignIn from './pages/sign-in';
 import ClientIdeas from './pages/client/client_ideas';
 import { useAuth } from './store/auth-provider';
 import AdminIdeas from './pages/admin/ideas/admin_ideas';
-import RMIdeas from './pages/rm/rm_ideas';
 import {
   PATH_ADMIN_COUNTRIES,
   PATH_ADMIN_CURRENCIES,
@@ -22,7 +21,9 @@ import {
   PATH_CLIENT_IDEA_DETAILS,
   PATH_CLIENT_IDEAS,
   PATH_CLIENT_RM_LIST,
+  PATH_RM_IDEA_DETAILS,
   PATH_RM_IDEAS,
+  PATH_RM_USERS,
   ROLE_ADMIN,
   ROLE_CLIENT,
   ROLE_RM,
@@ -43,9 +44,11 @@ import User from './pages/admin/users';
 import AdminIdeaDetails from './pages/admin/ideas/admin_ideas_details';
 import AdminIdeaCreate from './pages/admin/ideas/admin_idea_create';
 import ClientIdeaDetails from './pages/client/client_idea_details';
-import Client_holdings from './pages/client/client_holdings';
 import ClientHoldings from './pages/client/client_holdings';
 import ClientRms from './pages/client/client_rms';
+import { RMIdeas } from './pages/rm/rm_ideas';
+import RmUsers from './pages/rm/rm_users';
+import RmIdeaDetails from './pages/rm/rm_idea_details';
 
 function ProtectedPath() {
   const { isLogged } = useAuth();
@@ -121,6 +124,10 @@ function ProtectedPath() {
     switch (pathname) {
       case PATH_RM_IDEAS:
         return <RMIdeas />;
+      case PATH_RM_USERS:
+        return <RmUsers />;
+      case PATH_RM_IDEA_DETAILS:
+        return <RmIdeaDetails />;
       default:
         return <Navigate to={PATH_RM_IDEAS} replaced />;
     }
@@ -137,6 +144,9 @@ function AppPath() {
       <Route path={'/sign-up'} element={<SignUp />} />
       <Route path={'/recommend'} element={<Recommend />} />
       <Route path={'/profile'} element={<Profile />} />
+      <Route path={PATH_RM_IDEAS} element={ProtectedPath()} />
+      <Route path={PATH_RM_USERS} element={ProtectedPath()} />
+      <Route path={PATH_RM_IDEA_DETAILS} element={ProtectedPath()} />
       <Route path={PATH_CLIENT_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_CLIENT_IDEA_DETAILS} element={ProtectedPath()} />
       <Route path={PATH_CLIENT_HOLDINGS} element={ProtectedPath()} />
@@ -153,7 +163,6 @@ function AppPath() {
       <Route path={PATH_ADMIN_MINOR_SECTOR} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_REGION} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_USERS} element={ProtectedPath()} />
-      <Route path={PATH_RM_IDEAS} element={ProtectedPath} />
     </Routes>
   );
 }

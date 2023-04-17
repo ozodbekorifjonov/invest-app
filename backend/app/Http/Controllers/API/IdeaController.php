@@ -55,7 +55,7 @@ class IdeaController extends BaseController
 
     public function show($id)
     {
-        $idea = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'user')->find($id);
+        $idea = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'holders', 'user')->find($id);
         if (is_null($idea)) {
             return $this->sendError('Idea does not exist.');
         }
