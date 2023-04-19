@@ -77,7 +77,14 @@ function Layout({ children }) {
                       </Link>
                     </li>
                   )}
-
+                  {role === ROLE_CLIENT && (
+                    <li className="nav-item">
+                      <Link to={pathByUserRole('ideas-recommended-by-rm')} className="nav-link align-middle px-0">
+                        <i className="fs-4 bi-bookmark"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Ideas recommended by RM</span>
+                      </Link>
+                    </li>
+                  )}
                   {(role === ROLE_CLIENT || role === ROLE_ADMIN) && (
                     <li className="nav-item">
                       <Link to={pathByUserRole('rm-list')} className="nav-link align-middle px-0">

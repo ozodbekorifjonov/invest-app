@@ -14,7 +14,7 @@ class IdeaController extends BaseController
     public function index()
     {
 
-        $ideas = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'holders', 'user')->orderBy('updated_at', 'DESC')->get();
+        $ideas = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'user')->orderBy('updated_at', 'DESC')->get();
 
         return $this->sendResponse($ideas, 'Idea fetched.');
     }
@@ -94,6 +94,26 @@ class IdeaController extends BaseController
 
         $idea->holders()->sync([$user_id]);
         return $this->sendResponse($idea, 'Congrats!!! You are investor.');
+    }
+
+    public function updatePotentialClients(Request $request, string $id)
+    {
+        $idea = Idea::findOrFail($id);
+        $clients = $request->input('clients');
+        $rms = $request->input('rm_id');
+
+        $idea->possible_clients()->sync($clients);
+        $idea->rms()->sync($rms);
+        return $this->sendResponse($idea, 'New possible clients added!');
+    }
+
+    public function showIdeaDetailsWithClients($id)
+    {
+        $idea = Idea::with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'holders', 'possible_clients', 'rms', 'user')->find($id);
+        if (is_null($idea)) {
+            return $this->sendError('Idea does not exist.');
+        }
+        return $this->sendResponse($idea, 'Idea fetched.');
     }
 
     public function destroy(Idea $idea)

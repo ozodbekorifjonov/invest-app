@@ -52,13 +52,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('major-sector', MajorSectorController::class);
     Route::resource('minor-sector', MinorSectorController::class);
     Route::resource('region', RegionController::class);
+
     Route::resource('idea', IdeaController::class);
     Route::post('idea/{id}', [IdeaController::class, 'show']);
+    Route::post('idea-details-with-clients/{id}', [IdeaController::class, 'showIdeaDetailsWithClients']);
     Route::post('idea-holder/{id}', [IdeaController::class, 'updateHolder']);
+    Route::post('idea-potential-clients/{id}', [IdeaController::class, 'updatePotentialClients']);
+
     Route::post('me', [UserController::class, 'show']);
     Route::get('users-list', [UserController::class, 'index']);
     Route::put('update-user/{id}', [UserController::class, 'update']);
     Route::put('update-user-role/{id}', [UserController::class, 'updateUserRole']);
     Route::post('user-holdings/{id}', [UserController::class, 'holdingsList']);
     Route::post('user-list-by-role', [UserController::class, 'usersListByRole']);
+    Route::post('user-possible-clients', [UserController::class, 'possibleClientsList']);
+    Route::post('ideas-recommended-by-rm/{id}', [UserController::class, 'showRecommendedIdeas']);
 });

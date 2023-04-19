@@ -19,10 +19,12 @@ import {
   PATH_ADMIN_USERS,
   PATH_CLIENT_HOLDINGS,
   PATH_CLIENT_IDEA_DETAILS,
+  PATH_CLIENT_IDEA_RECOMMENDED_BY_RM,
   PATH_CLIENT_IDEAS,
   PATH_CLIENT_RM_LIST,
   PATH_RM_IDEA_DETAILS,
   PATH_RM_IDEAS,
+  PATH_RM_POTENTIAL_CLIENTS,
   PATH_RM_USERS,
   ROLE_ADMIN,
   ROLE_CLIENT,
@@ -49,6 +51,8 @@ import ClientRms from './pages/client/client_rms';
 import { RMIdeas } from './pages/rm/rm_ideas';
 import RmUsers from './pages/rm/rm_users';
 import RmIdeaDetails from './pages/rm/rm_idea_details';
+import RmPossibleClients from './pages/rm/rm_possible_clients';
+import ClientRecommendedIdeas from './pages/client/client_recommended_ideas';
 
 function ProtectedPath() {
   const { isLogged } = useAuth();
@@ -82,6 +86,8 @@ function ProtectedPath() {
         return <ClientHoldings />;
       case PATH_CLIENT_RM_LIST:
         return <ClientRms />;
+      case PATH_CLIENT_IDEA_RECOMMENDED_BY_RM:
+        return <ClientRecommendedIdeas />;
       default:
         return <Navigate to={PATH_CLIENT_IDEAS} replaced />;
     }
@@ -128,6 +134,8 @@ function ProtectedPath() {
         return <RmUsers />;
       case PATH_RM_IDEA_DETAILS:
         return <RmIdeaDetails />;
+      case PATH_RM_POTENTIAL_CLIENTS:
+        return <RmPossibleClients />;
       default:
         return <Navigate to={PATH_RM_IDEAS} replaced />;
     }
@@ -147,10 +155,12 @@ function AppPath() {
       <Route path={PATH_RM_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_RM_USERS} element={ProtectedPath()} />
       <Route path={PATH_RM_IDEA_DETAILS} element={ProtectedPath()} />
+      <Route path={PATH_RM_POTENTIAL_CLIENTS} element={ProtectedPath()} />
       <Route path={PATH_CLIENT_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_CLIENT_IDEA_DETAILS} element={ProtectedPath()} />
       <Route path={PATH_CLIENT_HOLDINGS} element={ProtectedPath()} />
       <Route path={PATH_CLIENT_RM_LIST} element={ProtectedPath()} />
+      <Route path={PATH_CLIENT_IDEA_RECOMMENDED_BY_RM} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEA_DETAILS} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_IDEA_CREATE} element={ProtectedPath()} />

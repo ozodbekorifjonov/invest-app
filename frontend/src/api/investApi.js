@@ -579,6 +579,19 @@ export async function ideaDetailsAPI(id) {
   });
 }
 
+export async function ideaDetailsWithClientsAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: `/api/idea-details-with-clients/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
 export async function createIdeaAPI(obj) {
   const token = localStorage.getItem(TOKEN);
 
@@ -683,6 +696,23 @@ export async function updateIdeaHolderAPI(user_id, id) {
   });
 }
 
+export async function updateIdeaPotentialClientsAPI(clients, id, rm_id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: `/api/idea-potential-clients/${id}`,
+    data: {
+      clients,
+      rm_id,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
 export async function holdingsListAPI(user_id) {
   const token = localStorage.getItem(TOKEN);
 
@@ -705,6 +735,35 @@ export async function userListByRoleAPI(role) {
     data: {
       role,
     },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function possibleClientsListAPI(role) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: `/api/user-possible-clients/`,
+    data: {
+      role,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function ideasRecommendedByRMAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: `/api/ideas-recommended-by-rm/${id}`,
     headers: {
       Authorization: `Bearer ${token}`,
       contentType: 'application/json',

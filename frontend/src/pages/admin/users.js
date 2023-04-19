@@ -9,7 +9,7 @@ import { useUsers } from '../../store/user-provider';
 function User() {
   const [currentItem, setCurrentItem] = useState(null);
   const [show, setShow] = useState(false);
-  const [role, setRole] = useState('oranges');
+  const [role, setRole] = useState('');
 
   const { isLoading, usersList, getUsersList } = useUsers();
 

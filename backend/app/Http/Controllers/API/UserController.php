@@ -127,4 +127,27 @@ class UserController extends BaseController
 
         return $this->sendResponse([], 'Empty users list.');
     }
+
+    public function possibleClientsList(Request $request)
+    {
+        $role = $request->input('role');
+
+        if ($role == 'RM' || $role == 'ADMIN') {
+            $users = User::with('possible_ideas')->orderBy('updated_at', 'DESC')->get();
+            $potentialUsers = $users->where('possible_ideas', '!=', '[]');
+
+            return $this->sendResponse($potentialUsers, 'Possible clients fetched.');
+        }
+
+        return $this->sendResponse([], 'Possible clients list.');
+    }
+
+    public function showRecommendedIdeas(string $id)
+    {
+        $recommendedIdeas = Idea::whereHas('possible_clients', function ($q) use ($id) {
+            $q->where('user_id', '=', $id);
+        })->with('rms', 'user')->get();
+
+        return $this->sendResponse($recommendedIdeas, 'Possible ideas');
+    }
 }
