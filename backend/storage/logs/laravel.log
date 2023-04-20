@@ -9338,3 +9338,17 @@
 #45 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('/Users/ozodorif...')
 #46 {main}
 "} 
+[2023-04-20 09:47:49] local.ERROR: Class "Laravel\Dusk\DuskServiceProvider" not found {"exception":"[object] (Error(code: 0): Class \"Laravel\\Dusk\\DuskServiceProvider\" not found at /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:827)
+[stacktrace]
+#0 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(761): Illuminate\\Foundation\\Application->resolveProvider('Laravel\\\\Dusk\\\\Du...')
+#1 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/app/Providers/AppServiceProvider.php(16): Illuminate\\Foundation\\Application->register('Laravel\\\\Dusk\\\\Du...')
+#2 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(764): App\\Providers\\AppServiceProvider->register()
+#3 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\\Foundation\\Application->register(Object(App\\Providers\\AppServiceProvider))
+#4 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(741): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(261): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(428): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 /Users/ozodorifjonov/Desktop/projects/OZOD.DEV/laravel-react-app/invest-app/backend/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
