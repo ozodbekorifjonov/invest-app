@@ -22,6 +22,7 @@ function RmUsers() {
                 <th scope="col">Last name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Telephone</th>
+                <th scope="col">Tags</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -36,6 +37,27 @@ function RmUsers() {
                       <a href={`mailto:${item.email}`}>{item.email}</a>
                     </td>
                     <td>{item.telephone}</td>
+                    <td>
+                      <div>
+                        <b>Countries:</b>
+                        {item.countries &&
+                          item.countries.map((citem, ci) => <span key={ci}>{citem.name}, </span>)}
+                      </div>
+                      <div>
+                        <b>Currencies:</b>
+                        {item.currencies &&
+                          item.currencies.map((ccitem, cci) => (
+                            <span key={cci}>{ccitem.title}, </span>
+                          ))}
+                      </div>
+                      <div>
+                        <b>Product types:</b>
+                        {item.product_types &&
+                          item.product_types.map((pitem, pi) => (
+                            <span key={pi}>{pitem.name}, </span>
+                          ))}
+                      </div>
+                    </td>
                     <td>
                       <a
                         className="app-form-button-sm app-button-success mx-1 text-decoration-none"

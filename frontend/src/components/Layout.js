@@ -85,7 +85,7 @@ function Layout({ children }) {
                       </Link>
                     </li>
                   )}
-                  {(role === ROLE_CLIENT || role === ROLE_ADMIN) && (
+                  {(role === ROLE_CLIENT) && (
                     <li className="nav-item">
                       <Link to={pathByUserRole('rm-list')} className="nav-link align-middle px-0">
                         <i className="fs-4 bi-telephone"></i>{' '}

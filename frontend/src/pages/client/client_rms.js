@@ -11,7 +11,7 @@ function ClientRms() {
   return (
     <div className="row">
       <div className="col-10 offset-1">
-        <h5>Users list</h5>
+        <h5>RMs list</h5>
         {isLoading && <Loader />}
         {!isLoading && (
           <table className="table table-hover">

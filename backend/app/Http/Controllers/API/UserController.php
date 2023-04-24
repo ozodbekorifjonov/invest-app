@@ -105,7 +105,8 @@ class UserController extends BaseController
     {
         $holdings = Idea::whereHas('holders', function ($q) use ($id) {
             $q->where('user_id', '=', $id);
-        })->with('risk_ratings', 'product_types', 'major_sectors', 'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'user')->get();
+        })->with('risk_ratings', 'product_types', 'major_sectors',
+            'minor_sectors', 'instruments', 'currencies', 'regions', 'countries', 'user')->get();
 
         return $this->sendResponse($holdings, 'Holdings list.');
     }
