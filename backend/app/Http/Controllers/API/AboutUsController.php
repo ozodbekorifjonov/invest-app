@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Region;
+use App\Models\AboutUs;
 use Illuminate\Http\Request;
 
-class RegionController extends Controller
+class AboutUsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $region = Region::orderBy('updated_at', 'DESC')->get();
-        return response()->json(['success' => true, 'data' => $region], 200);
+        $about_us = AboutUs::orderBy('updated_at', 'DESC')->get();
+        return response()->json(['success' => true, 'data' => $about_us], 200);
     }
 
     /**
@@ -31,11 +31,11 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $storeData = $request->validate([
-            'name' => 'required|max:255',
+            'content' => 'required',
         ]);
-        $newRegion = Region::create($storeData);
-        if ($newRegion) {
-            return response()->json(['data' => $newRegion, 'message' => 'Created successfully'], 201);
+        $newAboutUs = AboutUs::create($storeData);
+        if ($newAboutUs) {
+            return response()->json(['data' => $newAboutUs, 'message' => 'Created successfully'], 201);
         }
     }
 
@@ -52,8 +52,8 @@ class RegionController extends Controller
      */
     public function edit(string $id)
     {
-        $region = Region::find($id);
-        return response()->json(['status' => 200, 'riskRating' => $region]);
+        $about_us = AboutUs::find($id);
+        return response()->json(['status' => 200, 'data' => $about_us]);
     }
 
     /**
@@ -62,9 +62,9 @@ class RegionController extends Controller
     public function update(Request $request, string $id)
     {
         $updateData = $request->validate([
-            'name' => 'required|max:255',
+            'content' => 'required',
         ]);
-        Region::whereId($id)->update($updateData);
+        AboutUs::whereId($id)->update($updateData);
         return response()->json(['message' => 'Updated successfully'], 200);
     }
 
@@ -73,8 +73,8 @@ class RegionController extends Controller
      */
     public function destroy(string $id)
     {
-        $region = Region::find($id);
-        if ($region->delete()) {
+        $about_us = AboutUs::find($id);
+        if ($about_us->delete()) {
             return response()->json(['message' => 'Deleted successfully'], 200);
         }
     }

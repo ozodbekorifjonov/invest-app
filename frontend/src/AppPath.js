@@ -5,6 +5,7 @@ import ClientIdeas from './pages/client/client_ideas';
 import { useAuth } from './store/auth-provider';
 import AdminIdeas from './pages/admin/ideas/admin_ideas';
 import {
+  PATH_ADMIN_ABOUT_US,
   PATH_ADMIN_COUNTRIES,
   PATH_ADMIN_CURRENCIES,
   PATH_ADMIN_IDEA_CREATE,
@@ -13,15 +14,23 @@ import {
   PATH_ADMIN_INSTRUMENTS,
   PATH_ADMIN_MAJOR_SECTOR,
   PATH_ADMIN_MINOR_SECTOR,
+  PATH_ADMIN_POST_CREATE,
+  PATH_ADMIN_POSTS,
   PATH_ADMIN_PRODUCT_TYPES,
   PATH_ADMIN_REGION,
   PATH_ADMIN_RISK_RATING,
   PATH_ADMIN_USERS,
+  PATH_ALL_IDEAS,
+  PATH_BLOG,
   PATH_CLIENT_HOLDINGS,
   PATH_CLIENT_IDEA_DETAILS,
   PATH_CLIENT_IDEA_RECOMMENDED_BY_RM,
   PATH_CLIENT_IDEAS,
   PATH_CLIENT_RM_LIST,
+  PATH_CONTACT_RM,
+  PATH_HOLDINGS,
+  PATH_IDEA_DETAILS,
+  PATH_NEW_IDEA,
   PATH_RM_IDEA_DETAILS,
   PATH_RM_IDEAS,
   PATH_RM_POTENTIAL_CLIENTS,
@@ -53,6 +62,16 @@ import RmUsers from './pages/rm/rm_users';
 import RmIdeaDetails from './pages/rm/rm_idea_details';
 import RmPossibleClients from './pages/rm/rm_possible_clients';
 import ClientRecommendedIdeas from './pages/client/client_recommended_ideas';
+import AboutUs from './pages/admin/about_us';
+import Posts from './pages/admin/posts/posts';
+import PostCreate from './pages/admin/posts/post-create';
+import Home from './pages/home';
+import Ideas from './pages/ideas';
+import IdeaDetails from './pages/idea-details';
+import Blog from './pages/blog';
+import Holdings from './pages/holdings';
+import NewIdea from './pages/new-idea';
+import ContactRm from './pages/contact-rm';
 
 function ProtectedPath() {
   const { isLogged } = useAuth();
@@ -61,18 +80,6 @@ function ProtectedPath() {
 
   if (!isLogged) {
     return <Navigate to="/sign-in" replaced />;
-  }
-
-  if (pathname === '/') {
-    if (role === ROLE_CLIENT) {
-      return <Navigate to={PATH_CLIENT_IDEAS} replaced />;
-    }
-    if (role === ROLE_ADMIN) {
-      return <Navigate to={PATH_ADMIN_IDEAS} replaced />;
-    }
-    if (role === ROLE_RM) {
-      return <Navigate to={PATH_RM_IDEAS} replaced />;
-    }
   }
 
   // paths for Client
@@ -118,6 +125,12 @@ function ProtectedPath() {
         return <MinorSector />;
       case PATH_ADMIN_REGION:
         return <Region />;
+      case PATH_ADMIN_ABOUT_US:
+        return <AboutUs />;
+      case PATH_ADMIN_POSTS:
+        return <Posts />;
+      case PATH_ADMIN_POST_CREATE:
+        return <PostCreate />;
       case PATH_ADMIN_USERS:
         return <User />;
       default:
@@ -147,11 +160,17 @@ function ProtectedPath() {
 function AppPath() {
   return (
     <Routes>
-      <Route path={'/'} element={ProtectedPath()} />
+      <Route path={'/'} element={<Home />} />
       <Route path={'/sign-in'} element={<SignIn />} />
       <Route path={'/sign-up'} element={<SignUp />} />
       <Route path={'/recommend'} element={<Recommend />} />
       <Route path={'/profile'} element={<Profile />} />
+      <Route path={PATH_ALL_IDEAS} element={<Ideas />} />
+      <Route path={PATH_IDEA_DETAILS} element={<IdeaDetails />} />
+      <Route path={PATH_BLOG} element={<Blog />} />
+      <Route path={PATH_HOLDINGS} element={<Holdings />} />
+      <Route path={PATH_NEW_IDEA} element={<NewIdea />} />
+      <Route path={PATH_CONTACT_RM} element={<ContactRm />} />
       <Route path={PATH_RM_IDEAS} element={ProtectedPath()} />
       <Route path={PATH_RM_USERS} element={ProtectedPath()} />
       <Route path={PATH_RM_IDEA_DETAILS} element={ProtectedPath()} />
@@ -173,6 +192,9 @@ function AppPath() {
       <Route path={PATH_ADMIN_MINOR_SECTOR} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_REGION} element={ProtectedPath()} />
       <Route path={PATH_ADMIN_USERS} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_ABOUT_US} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_POSTS} element={ProtectedPath()} />
+      <Route path={PATH_ADMIN_POST_CREATE} element={ProtectedPath()} />
     </Routes>
   );
 }

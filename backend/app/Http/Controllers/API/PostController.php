@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Region;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class RegionController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $region = Region::orderBy('updated_at', 'DESC')->get();
-        return response()->json(['success' => true, 'data' => $region], 200);
+        $post = Post::orderBy('updated_at', 'DESC')->get();
+        return response()->json(['success' => true, 'data' => $post], 200);
     }
 
     /**
@@ -31,11 +31,12 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $storeData = $request->validate([
-            'name' => 'required|max:255',
+            'title' => 'required',
+            'content' => 'required',
         ]);
-        $newRegion = Region::create($storeData);
-        if ($newRegion) {
-            return response()->json(['data' => $newRegion, 'message' => 'Created successfully'], 201);
+        $newPost = Post::create($storeData);
+        if ($newPost) {
+            return response()->json(['data' => $newPost, 'message' => 'Created successfully', 'success' => true], 201);
         }
     }
 
@@ -44,7 +45,8 @@ class RegionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = Post::find($id);
+        return response()->json(['status' => 200, 'data' => $post]);
     }
 
     /**
@@ -52,8 +54,8 @@ class RegionController extends Controller
      */
     public function edit(string $id)
     {
-        $region = Region::find($id);
-        return response()->json(['status' => 200, 'riskRating' => $region]);
+        $post = Post::find($id);
+        return response()->json(['status' => 200, 'data' => $post]);
     }
 
     /**
@@ -62,10 +64,11 @@ class RegionController extends Controller
     public function update(Request $request, string $id)
     {
         $updateData = $request->validate([
-            'name' => 'required|max:255',
+            'title' => 'required',
+            'content' => 'required',
         ]);
-        Region::whereId($id)->update($updateData);
-        return response()->json(['message' => 'Updated successfully'], 200);
+        Post::whereId($id)->update($updateData);
+        return response()->json(['message' => 'Updated successfully', 'success' => true], 200);
     }
 
     /**
@@ -73,8 +76,8 @@ class RegionController extends Controller
      */
     public function destroy(string $id)
     {
-        $region = Region::find($id);
-        if ($region->delete()) {
+        $post = Post::find($id);
+        if ($post->delete()) {
             return response()->json(['message' => 'Deleted successfully'], 200);
         }
     }

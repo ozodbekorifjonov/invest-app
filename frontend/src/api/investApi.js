@@ -770,3 +770,115 @@ export async function ideasRecommendedByRMAPI(id) {
     },
   });
 }
+
+export async function aboutUsListAPI() {
+  return axios({
+    method: 'get',
+    url: '/api/about-us/',
+  });
+}
+
+export async function createAboutUsAPI(content) {
+  const token = localStorage.getItem(TOKEN);
+  const form = new FormData();
+
+  form.set('content', content);
+
+  return axios({
+    method: 'post',
+    url: '/api/about-us/',
+    data: form,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function deleteAboutUsAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'delete',
+    url: `/api/about-us/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updateAboutUsAPI(id, content) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/about-us/${id}`,
+    data: { content },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function postListAPI() {
+  return axios({
+    method: 'get',
+    url: '/api/post/',
+  });
+}
+
+export async function createPostAPI(title, content) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: '/api/post/',
+    data: { title, content },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function deletePostAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'delete',
+    url: `/api/post/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function postDetailsAPI(id) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'post',
+    url: `/api/post/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}
+
+export async function updatePostAPI(id, title, content) {
+  const token = localStorage.getItem(TOKEN);
+
+  return axios({
+    method: 'put',
+    url: `/api/post/${id}`,
+    data: { title, content },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      contentType: 'application/json',
+    },
+  });
+}

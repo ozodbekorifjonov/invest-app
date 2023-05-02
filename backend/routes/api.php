@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\API\AboutUsController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BlogController;
 use App\Http\Controllers\API\IdeaController;
 use App\Http\Controllers\API\InstrumentController;
 use App\Http\Controllers\API\MajorSectorController;
 use App\Http\Controllers\API\MinorSectorController;
+use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProductTypeController;
 use App\Http\Controllers\API\RegionController;
 use App\Http\Controllers\API\RiskRatingController;
@@ -30,6 +32,12 @@ Route::post('register', [AuthController::class, 'signup']);
 Route::get('product-types', [ProductTypeController::class, 'index']);
 Route::get('country', [CountryController::class, 'index']);
 Route::get('currency', [CurrencyController::class, 'index']);
+Route::get('about-us', [AboutUsController::class, 'index']);
+Route::get('post', [PostController::class, 'index']);
+Route::get('idea', [IdeaController::class, 'index']);
+Route::post('idea/{id}', [IdeaController::class, 'show']);
+Route::post('user-holdings/{id}', [UserController::class, 'holdingsList']);
+Route::post('user-list-by-role', [UserController::class, 'usersListByRole']);
 Route::put('user-recommends/{id}', [UserController::class, 'userRecommendsUpdate']);
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -47,14 +55,25 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('currency/{id}', [CurrencyController::class, 'update']);
     Route::delete('currency/{id}', [CurrencyController::class, 'destroy']);
 
+    Route::post('about-us', [AboutUsController::class, 'store']);
+    Route::put('about-us/{id}', [AboutUsController::class, 'update']);
+    Route::delete('about-us/{id}', [AboutUsController::class, 'destroy']);
+
+    Route::post('post', [PostController::class, 'store']);
+    Route::put('post/{id}', [PostController::class, 'update']);
+    Route::post('post/{id}', [PostController::class, 'show']);
+    Route::delete('post/{id}', [PostController::class, 'destroy']);
+
     Route::resource('risk-rating', RiskRatingController::class);
     Route::resource('instrument', InstrumentController::class);
     Route::resource('major-sector', MajorSectorController::class);
     Route::resource('minor-sector', MinorSectorController::class);
     Route::resource('region', RegionController::class);
 
-    Route::resource('idea', IdeaController::class);
-    Route::post('idea/{id}', [IdeaController::class, 'show']);
+    Route::post('idea', [IdeaController::class, 'store']);
+    Route::put('idea/{id}', [IdeaController::class, 'update']);
+    Route::delete('idea/{id}', [IdeaController::class, 'destroy']);
+
     Route::post('idea-details-with-clients/{id}', [IdeaController::class, 'showIdeaDetailsWithClients']);
     Route::post('idea-holder/{id}', [IdeaController::class, 'updateHolder']);
     Route::post('idea-potential-clients/{id}', [IdeaController::class, 'updatePotentialClients']);
@@ -63,8 +82,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('users-list', [UserController::class, 'index']);
     Route::put('update-user/{id}', [UserController::class, 'update']);
     Route::put('update-user-role/{id}', [UserController::class, 'updateUserRole']);
-    Route::post('user-holdings/{id}', [UserController::class, 'holdingsList']);
-    Route::post('user-list-by-role', [UserController::class, 'usersListByRole']);
     Route::post('user-possible-clients', [UserController::class, 'possibleClientsList']);
     Route::post('ideas-recommended-by-rm/{id}', [UserController::class, 'showRecommendedIdeas']);
 });

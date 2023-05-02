@@ -1,11 +1,13 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
+  aboutUsListAPI,
   countryListAPI,
   currencyListAPI,
   instrumentsListAPI,
   majorSectorListAPI,
   minorSectorListAPI,
+  postListAPI,
   productTypesListAPI,
   regionListAPI,
   riskRatingListAPI,
@@ -21,6 +23,8 @@ const ContextProps = {
   majorSectorList: [],
   minorSectorList: [],
   regionList: [],
+  aboutUsList: [],
+  postList: [],
   getProductTypesList: () => {},
   getCurrenciesList: () => {},
   getCountriesList: () => {},
@@ -29,6 +33,8 @@ const ContextProps = {
   getMajorSectorList: () => {},
   getMinorSectorList: () => {},
   getRegionList: () => {},
+  getAboutUsList: () => {},
+  getPostList: () => {},
 };
 
 const RecommendContext = createContext(ContextProps);
@@ -51,6 +57,8 @@ function useProvideRecommends() {
   const [majorSectorList, setMajorSectorList] = useState([]);
   const [minorSectorList, setMinorSectorList] = useState([]);
   const [regionList, setRegionList] = useState([]);
+  const [aboutUsList, setAboutUsList] = useState([]);
+  const [postList, setPostList] = useState([]);
 
   const getProductTypesList = useCallback(async () => {
     try {
@@ -148,6 +156,30 @@ function useProvideRecommends() {
     }
   }, []);
 
+  const getAboutUsList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res = await aboutUsListAPI();
+      setLoading(false);
+      setAboutUsList(res.data.data);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  }, []);
+
+  const getPostList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res = await postListAPI();
+      setLoading(false);
+      setPostList(res.data.data);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  }, []);
+
   return {
     isLoading,
     productTypesList,
@@ -158,6 +190,8 @@ function useProvideRecommends() {
     majorSectorList,
     minorSectorList,
     regionList,
+    aboutUsList,
+    postList,
     getProductTypesList,
     getCurrenciesList,
     getCountriesList,
@@ -166,5 +200,7 @@ function useProvideRecommends() {
     getMajorSectorList,
     getMinorSectorList,
     getRegionList,
+    getAboutUsList,
+    getPostList,
   };
 }

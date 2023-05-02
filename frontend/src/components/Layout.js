@@ -1,8 +1,33 @@
 import React from 'react';
 import Logo from '../assets/images/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../store/auth-provider';
-import { ROLE_ADMIN, ROLE_CLIENT, ROLE_RM, USER_ROLE } from '../consts';
+import {
+  PATH_ALL_IDEAS,
+  PATH_BLOG,
+  PATH_CONTACT_RM,
+  PATH_HOLDINGS,
+  PATH_IDEA_DETAILS,
+  PATH_NEW_IDEA,
+  ROLE_ADMIN,
+  ROLE_CLIENT,
+  ROLE_RM,
+  USER_ROLE,
+} from '../consts';
+
+const USER_PATHS_LIST = [
+  '/',
+  '/sign-in',
+  '/sign-up',
+  '/recommend',
+  '/profile',
+  PATH_ALL_IDEAS,
+  PATH_IDEA_DETAILS,
+  PATH_BLOG,
+  PATH_HOLDINGS,
+  PATH_NEW_IDEA,
+  PATH_CONTACT_RM,
+];
 
 function Layout({ children }) {
   const { isLogged } = useAuth();
@@ -10,6 +35,7 @@ function Layout({ children }) {
   const role = localStorage.getItem(USER_ROLE);
   const firstname = localStorage.getItem('firstname');
   const lastname = localStorage.getItem('lastname');
+  const { pathname } = useLocation();
 
   const pathByUserRole = (path) => {
     switch (role) {
@@ -24,7 +50,7 @@ function Layout({ children }) {
     }
   };
 
-  if (isLogged) {
+  if (isLogged && !USER_PATHS_LIST.includes(pathname)) {
     return (
       <section className="user-page">
         <div className="container-fluid">
@@ -62,7 +88,10 @@ function Layout({ children }) {
                   {role === ROLE_RM && (
                     <>
                       <li className="nav-item">
-                        <Link to={pathByUserRole('potential-customers')} className="nav-link align-middle px-0">
+                        <Link
+                          to={pathByUserRole('potential-customers')}
+                          className="nav-link align-middle px-0"
+                        >
                           <i className="fs-4 bi-person-gear"></i>{' '}
                           <span className="ms-1 d-none d-sm-inline">Potential customers</span>
                         </Link>
@@ -79,13 +108,16 @@ function Layout({ children }) {
                   )}
                   {role === ROLE_CLIENT && (
                     <li className="nav-item">
-                      <Link to={pathByUserRole('ideas-recommended-by-rm')} className="nav-link align-middle px-0">
+                      <Link
+                        to={pathByUserRole('ideas-recommended-by-rm')}
+                        className="nav-link align-middle px-0"
+                      >
                         <i className="fs-4 bi-bookmark"></i>{' '}
                         <span className="ms-1 d-none d-sm-inline">Ideas recommended by RM</span>
                       </Link>
                     </li>
                   )}
-                  {(role === ROLE_CLIENT) && (
+                  {role === ROLE_CLIENT && (
                     <li className="nav-item">
                       <Link to={pathByUserRole('rm-list')} className="nav-link align-middle px-0">
                         <i className="fs-4 bi-telephone"></i>{' '}
@@ -173,6 +205,22 @@ function Layout({ children }) {
                       <Link to={pathByUserRole('region')} className="nav-link align-middle px-0">
                         <i className="fs-4 bi-globe-americas"></i>{' '}
                         <span className="ms-1 d-none d-sm-inline">Regions</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link to={pathByUserRole('about-us')} className="nav-link align-middle px-0">
+                        <i className="fs-4 bi-info-circle"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">About us</span>
+                      </Link>
+                    </li>
+                  )}
+                  {role === ROLE_ADMIN && (
+                    <li className="nav-item">
+                      <Link to={pathByUserRole('posts')} className="nav-link align-middle px-0">
+                        <i className="fs-4 bi-file-post"></i>{' '}
+                        <span className="ms-1 d-none d-sm-inline">Posts</span>
                       </Link>
                     </li>
                   )}

@@ -39,7 +39,7 @@ function Profile() {
 
   return (
     <div className="container">
-      <div className="row">
+      <div className="row mt-5">
         <div className="col-8 offset-2">
           <div className="row">
             <div className="col-4 offset-4">

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/auth-provider';
+import { PATH_ADMIN_IDEAS, PATH_RM_IDEAS, ROLE_ADMIN, ROLE_RM } from '../consts';
 
 const BoxDiv = styled.div`
   position: absolute;
@@ -61,7 +62,13 @@ function SignIn() {
 
     const response = await signIn(email.current.value, password.current.value);
     if (response.success) {
-      navigate('/');
+      if (response.data.user.role === ROLE_ADMIN) {
+        navigate(PATH_ADMIN_IDEAS);
+      } else if (response.data.user.role === ROLE_RM) {
+        navigate(PATH_RM_IDEAS);
+      } else {
+        navigate('/');
+      }
     }
   };
 
