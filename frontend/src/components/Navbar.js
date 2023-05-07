@@ -76,9 +76,9 @@ function Navbar() {
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#about-us">
-                    About
-                  </a>
+                  <Link className="nav-link" to={'/'}>
+                    Home
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to={PATH_ALL_IDEAS}>
