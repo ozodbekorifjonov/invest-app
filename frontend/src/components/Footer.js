@@ -13,7 +13,7 @@ function Footer() {
       <div className="container pt-3">
         <div className="text-end">
           <h3>Contact me</h3>
-          <a href="">davlatbek@gmail.com</a>
+          <a href="">giyosidin136@gmail.com</a>
         </div>
       </div>
     </FooterBox>

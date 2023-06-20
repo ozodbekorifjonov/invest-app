@@ -56,7 +56,7 @@ function SignUp() {
   const telephone = useRef();
   const email = useRef();
   const password = useRef();
-  const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  /*const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;*/
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
@@ -64,10 +64,10 @@ function SignUp() {
   const createUserAccount = async (e) => {
     e.preventDefault();
 
-    if (!password.current.value.match(passwordRegEx))
+    /*if (!password.current.value.match(passwordRegEx))
       return toast.warning(
         'Password must be minimum 8 characters, at least 1 letter and 1 number.'
-      );
+      );*/
 
     const newAccount = {
       firstname: firstname.current.value,
